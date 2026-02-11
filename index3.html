@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneShop - Смартфондор дүкөнү</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .main-header {
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span {
+            color: #1a73e8;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .header-icon {
+            position: relative;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.3s;
+        }
+        
+        .header-icon:hover {
+            color: #1a73e8;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Navigation */
+        .main-nav {
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            padding: 15px 0;
+            flex-wrap: wrap;
+        }
+        
+        .nav-item {
+            margin: 0 15px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 0;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: #1a73e8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1480&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Products */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #333;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            border-radius: 2px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #f8f9fa;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff4757;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-brand {
+            color: #1a73e8;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .product-specs {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .product-price .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+        
+        .add-to-cart {
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #1a73e8;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .footer-links a:hover {
+            color: #1a73e8;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: #1a73e8;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: flex-end;
+        }
+        
+        .cart-content {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            height: 100%;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .cart-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-items {
+            padding: 20px;
+            min-height: 300px;
+        }
+        
+        .cart-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-price {
+            color: #1a73e8;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-footer {
+            padding: 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+            
+            .nav-list {
+                flex-wrap: wrap;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                gap: 20px;
+            }
+            
+            .cart-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">Бекер жеткирүү 5000 сомдон жогору сатып алууларга | Кредит менен сатып алуу мүмкүнчүлүгү</div>
+        </div>
+        
+        <div class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-mobile-alt"></i>
+                        Phone<span>Shop</span>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Смартфон издөө...">
+                        <button id="searchButton">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <div class="header-icon" id="cartButton">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a class="nav-link active" data-category="all">Башкы бет</a></li>
+                    <li class="nav-item"><a class="nav-link" data-category="iphone">iPhone</a></li>
+                    <li class="nav-item"><a class="nav-link" data-category="samsung">Samsung</a></li>
+                    <li class="nav-item"><a class="nav-link" data-category="xiaomi">Xiaomi</a></li>
+                    <li class="nav-item"><a class="nav-link" data-category="huawei">Huawei</a></li>
+                    <li class="nav-item"><a class="nav-link" data-category="oppo">OPPO</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>2024 Жаңы Смартфондор</h1>
+            <p>Эң акыркы технологиялар, эң жакшы баалар. Бардык бренддер, бардык моделдер биздин дүкөндө.</p>
+            <button class="cta-button" id="ctaButton">Коллекцияны көрүү</button>
+        </div>
+    </section>
+    
+    <!-- Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title" id="productsTitle">Көп сатылуучу смартфондор</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Смартфондор бул жерге жүктөлөт -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PhoneShop</h3>
+                    <p>Биз 2015-жылдан бери Кыргызстанда эң мыкты смартфондорду сунуштап келебиз. Расмий дилер, кепилдик жана жогорку сапат.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Бренддер</h3>
+                    <ul class="footer-links">
+                        <li><a data-category="iphone">Apple iPhone</a></li>
+                        <li><a data-category="samsung">Samsung Galaxy</a></li>
+                        <li><a data-category="xiaomi">Xiaomi Redmi</a></li>
+                        <li><a data-category="huawei">Huawei</a></li>
+                        <li><a data-category="oppo">OPPO</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Маалымат</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Биз жөнүндө</a></li>
+                        <li><a href="#">Кепилдик</a></li>
+                        <li><a href="#">Жеткирүү шарттары</a></li>
+                        <li><a href="#">Кабыл алуу жана кайтаруу</a></li>
+                        <li><a href="#">Кредит менен сатып алуу</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек, Манас көч., 45</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="far fa-envelope"></i> @phoneshop.kg</li>
+                        <li><i class="far fa-clock"></i> Дүйшөмбү-Жума: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 PhoneShop. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-cart"></i> Сиздин себет</h2>
+                <button id="closeCartButton">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Себеттеги товарлар бул жерге жүктөлөт -->
+            </div>
+            
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Жалпы сумма:</span>
+                    <span id="cartTotal">0 сом</span>
+                </div>
+                <button class="checkout-btn" id="checkoutButton">
+                    <i class="fas fa-check"></i> Заказ берип жатышат
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== ГЛОБАЛДЫК ӨЗГӨРМӨЛӨР ==========
+        let cart = [];
+        let currentCategory = 'all';
+        
+        // ========== ТЕЛЕФОНДОРДУН ДАТАСЫ ==========
+        const phonesData = [
+            {
+                id: 1,
+                name: 'iPhone 15 Pro Max 256GB',
+                brand: 'iphone',
+                price: 109990,
+                oldPrice: 119990,
+                specs: '6.7" OLED, A17 Pro, 48MP камера, титан корпус',
+                image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: 'Жаңы'
+            },
+            {
+                id: 2,
+                name: 'Samsung Galaxy S24 Ultra',
+                brand: 'samsung',
+                price: 99990,
+                oldPrice: 0,
+                specs: '6.8" Dynamic AMOLED, Snapdragon 8 Gen 3, 200MP камера, S Pen',
+                image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: 'Флагман'
+            },
+            {
+                id: 3,
+                name: 'Xiaomi Redmi Note 13 Pro+',
+                brand: 'xiaomi',
+                price: 35990,
+                oldPrice: 39990,
+                specs: '6.67" AMOLED, Dimensity 7200-Ultra, 200MP камера, 120W заряддоо',
+                image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: 'Арзандатуу'
+            },
+            {
+                id: 4,
+                name: 'Huawei P60 Pro',
+                brand: 'huawei',
+                price: 78990,
+                oldPrice: 0,
+                specs: '6.67" LTPO OLED, Snapdragon 8+ Gen 1, 48MP камера',
+                image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1528&q=80',
+                badge: ''
+            },
+            {
+                id: 5,
+                name: 'OPPO Find X6 Pro',
+                brand: 'oppo',
+                price: 85990,
+                oldPrice: 92990,
+                specs: '6.82" AMOLED, Snapdragon 8 Gen 2, 50MP үч камера',
+                image: 'https://images.unsplash.com/photo-1598327105854-c8674faddf74?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: '10% арзандатуу'
+            },
+            {
+                id: 6,
+                name: 'iPhone 14 128GB',
+                brand: 'iphone',
+                price: 69990,
+                oldPrice: 79990,
+                specs: '6.1" Super Retina XDR, A15 Bionic, 12MP камера',
+                image: 'https://images.unsplash.com/photo-1675867528417-6f699b1c7eb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: 'Арзандатуу'
+            },
+            {
+                id: 7,
+                name: 'Samsung Galaxy A54',
+                brand: 'samsung',
+                price: 28990,
+                oldPrice: 32990,
+                specs: '6.4" Super AMOLED, Exynos 1380, 50MP камера, IP67',
+                image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80',
+                badge: 'Эң мыкты сатылуу'
+            },
+            {
+                id: 8,
+                name: 'Xiaomi 13T Pro',
+                brand: 'xiaomi',
+                price: 45990,
+                oldPrice: 0,
+                specs: '6.67" CrystalRes AMOLED, Dimensity 9200+, Leica камера',
+                image: 'https://images.unsplash.com/photo-1592899677977-9c10ca588bbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1528&q=80',
+                badge: 'Жаңы'
+            }
+        ];
+        
+        // ========== ДОМ ЖҮКТӨЛГӨНДӨ ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PhoneShop сайты жүктөлдү!');
+            
+            // Иконкаларды жүктөө
+            loadFontAwesome();
+            
+            // Продуктарды жүктөө
+            loadProducts();
+            
+            // Себетти жүктөө
+            loadCart();
+            updateCartDisplay();
+            
+            // Event listener'лерди кошуу
+            setupEventListeners();
+            
+            // Welcome notification
+            showWelcomeMessage();
+        });
+        
+        // ========== EVENT LISTENER'ЛЕРДИ КОШУУ ==========
+        function setupEventListeners() {
+            // Издөө баскычы
+            document.getElementById('searchButton').addEventListener('click', searchProducts);
+            
+            // Enter баскычы менен издөө
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+            
+            // Себет баскычы
+            document.getElementById('cartButton').addEventListener('click', toggleCart);
+            
+            // Себетти жабуу баскычы
+            document.getElementById('closeCartButton').addEventListener('click', toggleCart);
+            
+            // Checkout баскычы
+            document.getElementById('checkoutButton').addEventListener('click', checkout);
+            
+            // CTA баскычы
+            document.getElementById('ctaButton').addEventListener('click', scrollToProducts);
+            
+            // Навигация байланыштары
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    filterByCategory(category);
+                });
+            });
+            
+            // Footer байланыштары
+            document.querySelectorAll('.footer-links a[data-category]').forEach(link => {
+                link.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    filterByCategory(category);
+                });
+            });
+            
+            // Модалдык терезени жабуу
+            document.getElementById('cartModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    toggleCart();
+                }
+            });
+        }
+        
+        // ========== FONT AWESOME ЖҮКТӨӨ ==========
+        function loadFontAwesome() {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+            document.head.appendChild(link);
+        }
+        
+        // ========== ПРОДУКТАРДЫ ЖҮКТӨӨ ==========
+        function loadProducts() {
+            const container = document.getElementById('productsGrid');
+            const title = document.getElementById('productsTitle');
+            
+            if (!container) {
+                console.error('Продуктар контейнери табылган жок!');
+                return;
+            }
+            
+            // Контейнерди боштоо
+            container.innerHTML = '';
+            
+            // Фильтрлөө
+            let filteredPhones = phonesData;
+            if (currentCategory !== 'all') {
+                filteredPhones = phonesData.filter(phone => phone.brand === currentCategory);
+            }
+            
+            // Аталыш жаңыртуу
+            if (title) {
+                const titles = {
+                    'all': 'Көп сатылуучу смартфондор',
+                    'iphone': 'iPhone смартфондору',
+                    'samsung': 'Samsung смартфондору',
+                    'xiaomi': 'Xiaomi смартфондору',
+                    'huawei': 'Huawei смартфондору',
+                    'oppo': 'OPPO смартфондору'
+                };
+                title.textContent = titles[currentCategory] || 'Смартфондор';
+            }
+            
+            // Эгерде товар жок болсо
+            if (filteredPhones.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-mobile-alt" style="font-size: 70px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Бул категорияда смартфон жок</h3>
+                        <p>Башка категорияларды караңыз</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Продуктарды түзүү
+            filteredPhones.forEach(phone => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                // Бадж
+                let badge = phone.badge;
+                if (!badge && phone.oldPrice && phone.oldPrice > phone.price) {
+                    const discount = Math.round((1 - phone.price / phone.oldPrice) * 100);
+                    badge = discount + '% арзандатуу';
+                }
+                
+                card.innerHTML = `
+                    <div class="product-image" style="background-image: url('${phone.image}')">
+                        ${badge ? `<div class="product-badge">${badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-brand">${getBrandName(phone.brand)}</div>
+                        <div class="product-name">${phone.name}</div>
+                        <div class="product-specs">${phone.specs}</div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                ${phone.oldPrice && phone.oldPrice > phone.price ? 
+                                    `<span class="old-price">${phone.oldPrice} сом</span>` : ''}
+                                ${phone.price} сом
+                            </div>
+                            <button class="add-to-cart" data-id="${phone.id}">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Add to cart button event
+                const addButton = card.querySelector('.add-to-cart');
+                addButton.addEventListener('click', function() {
+                    addToCart(parseInt(this.getAttribute('data-id')));
+                });
+                
+                container.appendChild(card);
+            });
+            
+            console.log(`${filteredPhones.length} смартфон жүктөлдү`);
+        }
+        
+        // ========== БРЕНД АТЫН АЛУУ ==========
+        function getBrandName(brandId) {
+            const brands = {
+                'iphone': 'Apple iPhone',
+                'samsung': 'Samsung',
+                'xiaomi': 'Xiaomi',
+                'huawei': 'Huawei',
+                'oppo': 'OPPO'
+            };
+            return brands[brandId] || brandId;
+        }
+        
+        // ========== КАТЕГОРИЯ БОЮНЧА ФИЛЬТРЛӨӨ ==========
+        function filterByCategory(categoryId) {
+            console.log(`Категория өзгөртүлдү: ${categoryId}`);
+            
+            // Категорияны жаңыртуу
+            currentCategory = categoryId;
+            
+            // Навигацияны жаңыртуу
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-category') === categoryId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Продуктарды жүктөө
+            loadProducts();
+            
+            // Скроллдоо
+            setTimeout(() => {
+                const productsSection = document.querySelector('.products');
+                if (productsSection) {
+                    productsSection.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }, 100);
+        }
+        
+        // ========== СЕБЕТКЕ КОШУУ ==========
+        function addToCart(phoneId) {
+            const phone = phonesData.find(p => p.id === phoneId);
+            if (!phone) {
+                console.error(`Телефон табылган жок: ${phoneId}`);
+                return;
+            }
+            
+            const existingItem = cart.find(item => item.id === phoneId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: phone.id,
+                    name: phone.name,
+                    price: phone.price,
+                    image: phone.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartDisplay();
+            saveCart();
+            showNotification(phone.name + ' себетке кошулду!');
+        }
+        
+        // ========== СЕБЕТ ДИСПЛЕЙИН ЖАҢЫРТУУ ==========
+        function updateCartDisplay() {
+            // Себеттеги товарлардын саны
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElement = document.getElementById('cartCount');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+            
+            // Себеттеги товарларды көрсөтүү
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (!cartItemsContainer || !cartTotalElement) return;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #888;">
+                        <i class="fas fa-shopping-cart" style="font-size: 70px; margin-bottom: 20px; color: #ddd;"></i>
+                        <h3>Себет бош</h3>
+                        <p>Себетке смартфон кошуңуз</p>
+                    </div>
+                `;
+                cartTotalElement.textContent = '0 сом';
+            } else {
+                let itemsHTML = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    itemsHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-image" style="background-image: url('${item.image}')"></div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">${item.price} сом</div>
+                                <div class="cart-item-actions">
+                                    <button class="quantity-btn" data-index="${index}" data-change="-1">-</button>
+                                    <span style="font-weight: 600; min-width: 30px; text-align: center;">${item.quantity}</span>
+                                    <button class="quantity-btn" data-index="${index}" data-change="1">+</button>
+                                    <button class="remove-btn" data-index="${index}" style="margin-left: 20px; background: none; border: none; color: #ff4757; cursor: pointer;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                cartItemsContainer.innerHTML = itemsHTML;
+                cartTotalElement.textContent = total + ' сом';
+                
+                // Quantity button events
+                document.querySelectorAll('.quantity-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const change = parseInt(this.getAttribute('data-change'));
+                        updateCartQuantity(index, change);
+                    });
+                });
+                
+                // Remove button events
+                document.querySelectorAll('.remove-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        removeFromCart(index);
+                    });
+                });
+            }
+        }
+        
+        // ========== СЕБЕТТЕГИ ТОВАРДЫН САНЫН ӨЗГӨРТҮҮ ==========
+        function updateCartQuantity(index, change) {
+            if (cart[index]) {
+                cart[index].quantity += change;
+                
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+                
+                updateCartDisplay();
+                saveCart();
+            }
+        }
+        
+        // ========== СЕБЕТТЕН ТОВАРДЫ ЧЫГАРУУ ==========
+        function removeFromCart(index) {
+            if (cart[index]) {
+                const itemName = cart[index].name;
+                cart.splice(index, 1);
+                updateCartDisplay();
+                saveCart();
+                showNotification(itemName + ' себеттен чыгарылды');
+            }
+        }
+        
+        // ========== СЕБЕТТИ ЖҮКТӨӨ ==========
+        function loadCart() {
+            const savedCart = localStorage.getItem('phoneCart');
+            if (savedCart) {
+                try {
+                    cart = JSON.parse(savedCart);
+                    console.log('Себет жүктөлдү:', cart.length + ' товар');
+                } catch (e) {
+                    console.error('Себетти жүктөөдө ката:', e);
+                    cart = [];
+                }
+            }
+        }
+        
+        // ========== СЕБЕТТИ САКТОО ==========
+        function saveCart() {
+            localStorage.setItem('phoneCart', JSON.stringify(cart));
+        }
+        
+        // ========== СЕБЕТ МОДАЛЫ ==========
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                updateCartDisplay();
+                modal.style.display = 'flex';
+            }
+        }
+        
+        // ========== ИЗДӨӨ ==========
+        function searchProducts() {
+            const input = document.getElementById('searchInput');
+            const searchTerm = input.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                loadProducts();
+                return;
+            }
+            
+            const filteredPhones = phonesData.filter(phone => 
+                phone.name.toLowerCase().includes(searchTerm) ||
+                phone.specs.toLowerCase().includes(searchTerm) ||
+                getBrandName(phone.brand).toLowerCase().includes(searchTerm)
+            );
+            
+            const container = document.getElementById('productsGrid');
+            const title = document.getElementById('productsTitle');
+            
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (filteredPhones.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-search" style="font-size: 70px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Смартфон табылган жок</h3>
+                        <p>"${searchTerm}" издегенде эч кандай натыйжа жок</p>
+                    </div>
+                `;
+                if (title) {
+                    title.textContent = 'Издөө натыйжасы';
+                }
+            } else {
+                if (title) {
+                    title.textContent = 'Издөө натыйжасы: ' + filteredPhones.length + ' смартфон';
+                }
+                
+                filteredPhones.forEach(phone => {
+                    let badge = phone.badge;
+                    if (!badge && phone.oldPrice && phone.oldPrice > phone.price) {
+                        const discount = Math.round((1 - phone.price / phone.oldPrice) * 100);
+                        badge = discount + '% арзандатуу';
+                    }
+                    
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    
+                    card.innerHTML = `
+                        <div class="product-image" style="background-image: url('${phone.image}')">
+                            ${badge ? `<div class="product-badge">${badge}</div>` : ''}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-brand">${getBrandName(phone.brand)}</div>
+                            <div class="product-name">${phone.name}</div>
+                            <div class="product-specs">${phone.specs}</div>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    ${phone.oldPrice && phone.oldPrice > phone.price ? 
+                                        `<span class="old-price">${phone.oldPrice} сом</span>` : ''}
+                                    ${phone.price} сом
+                                </div>
+                                <button class="add-to-cart" data-id="${phone.id}">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // Add to cart button event
+                    const addButton = card.querySelector('.add-to-cart');
+                    addButton.addEventListener('click', function() {
+                        addToCart(parseInt(this.getAttribute('data-id')));
+                    });
+                    
+                    container.appendChild(card);
+                });
+            }
+        }
+        
+        // ========== ЗАКАЗ БЕРҮҮ ==========
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Себет бош!');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            alert('✅ СМАРТФОН ЗАКАЗЫ ИЙГИЛИКТҮҮ БЕРИЛДИ!\n\n📱 Смартфондор: ' + totalItems + '\n💰 Жалпы сумма: ' + total + ' сом\n\nБиз сиз менен 10-15 мүнөттүн ичинде байланышабыз!');
+            
+            cart = [];
+            updateCartDisplay();
+            saveCart();
+            toggleCart();
+            showNotification('Заказ ийгиликтүү берилди! Рахмат сатып алууңуз үчүн!');
+        }
+        
+        // ========== УВЕДОМЛЕНИЕ ==========
+        function showNotification(message) {
+            // Жөнөкөй алерт
+            alert(message);
+        }
+        
+        // ========== WELCOME MESSAGE ==========
+        function showWelcomeMessage() {
+            if (!localStorage.getItem('phoneFirstVisit')) {
+                localStorage.setItem('phoneFirstVisit', 'true');
+                setTimeout(() => {
+                    alert('PhoneShop дүкөнүнө кош келиңиз! Жаңы смартфондор 10% арзандатуу менен!');
+                }, 1000);
+            }
+        }
+        
+        // ========== СКРОЛЛДОО ==========
+        function scrollToProducts() {
+            const productsSection = document.querySelector('.products');
+            if (productsSection) {
+                productsSection.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+        
+        // ========== DEBUG ИНФОРМАЦИЯ ==========
+        function debugInfo() {
+            console.log('===== DEBUG INFO =====');
+            console.log('Телефондордун саны:', phonesData.length);
+            console.log('Себеттеги товарлар:', cart.length);
+            console.log('Учурдагы категория:', currentCategory);
+            console.log('Продуктар контейнери:', document.getElementById('productsGrid') ? 'Табылды' : 'Табылган жок');
+            console.log('===== END DEBUG =====');
+        }
+        
+        // Debug информацияны чакыруу
+        setTimeout(debugInfo, 1000);
+    </script>
+</body>
+</html>

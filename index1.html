@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интернет магазин</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #e67e22;
+        }
+
+        .logo span {
+            color: #e67e22;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+            position: relative;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e67e22;
+        }
+
+        .nav-active {
+            color: #e67e22 !important;
+            border-bottom: 2px solid #e67e22;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .header-btn {
+            background: #e67e22;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            border: 2px solid #e67e22;
+            cursor: pointer;
+        }
+
+        .header-btn:hover {
+            background: transparent;
+            color: #e67e22;
+        }
+
+        .header-btn.outline {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .header-btn.outline:hover {
+            background: white;
+            color: #2c3e50;
+        }
+
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: white;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            min-width: 200px;
+            display: none;
+            z-index: 1001;
+        }
+
+        .user-menu:hover .user-dropdown {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: block;
+            padding: 1rem;
+            color: #333;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+
+        .user-dropdown a:hover {
+            background: #f8f9fa;
+            color: #e67e22;
+        }
+
+        .user-dropdown a i {
+            margin-right: 0.5rem;
+            width: 20px;
+            color: #7f8c8d;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Модальные окна */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #7f8c8d;
+            cursor: pointer;
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #e67e22;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-error {
+            color: #e74c3c;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .modal-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn:hover {
+            background: #d35400;
+        }
+
+        .modal-btn.secondary {
+            background: #7f8c8d;
+            margin-top: 1rem;
+        }
+
+        .modal-btn.secondary:hover {
+            background: #636e72;
+        }
+
+        .form-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #7f8c8d;
+        }
+
+        .form-switch a {
+            color: #e67e22;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .address-list {
+            margin-bottom: 2rem;
+        }
+
+        .address-item {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            border: 1px solid #eee;
+        }
+
+        .address-item.active {
+            border-color: #e67e22;
+            background: #fff8e1;
+        }
+
+        .address-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .address-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-small {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.9rem;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .btn-small.delete {
+            background: #e74c3c;
+        }
+
+        /* Profile Page */
+        .profile-container {
+            padding: 4rem 0;
+            min-height: 70vh;
+        }
+
+        .profile-sidebar {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            padding: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: #e67e22;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+            color: white;
+        }
+
+        .profile-menu {
+            list-style: none;
+        }
+
+        .profile-menu li {
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-menu a {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .profile-menu a:hover {
+            background: #f8f9fa;
+            color: #e67e22;
+        }
+
+        .profile-menu a.active {
+            background: #f8f9fa;
+            color: #e67e22;
+            border-left: 4px solid #e67e22;
+        }
+
+        .profile-menu a i {
+            margin-right: 0.8rem;
+            width: 20px;
+            color: #7f8c8d;
+        }
+
+        .profile-content {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 2rem;
+        }
+
+        .profile-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .profile-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .profile-section h3 {
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .info-label {
+            flex: 0 0 150px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #7f8c8d;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(52, 73, 94, 0.8)), 
+                        url('https://images.unsplash.com/photo-1615529328331-f8917597711f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80');
+            height: 70vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #e67e22;
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid #e67e22;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: transparent;
+            color: #e67e22;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(230, 126, 34, 0.3);
+        }
+
+        /* Категориялар */
+        .categories {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #e67e22;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .category-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+        }
+
+        /* Контакты */
+        .contact {
+            padding: 5rem 0;
+            background: #f8f9fa;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .contact-form button {
+            background: #e67e22;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 4rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: #e67e22;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e67e22;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info li i {
+            margin-right: 1rem;
+            color: #e67e22;
+            width: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Медиа запросы */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .header-actions {
+                margin-top: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .info-row {
+                flex-direction: column;
+            }
+            
+            .info-label {
+                flex: none;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Модальные окна -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            <h2>Кирүү</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Email же телефон <span class="required">*</span></label>
+                    <input type="text" id="loginEmail" required>
+                    <div class="form-error" id="loginEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Сырсөз <span class="required">*</span></label>
+                    <input type="password" id="loginPassword" required>
+                    <div class="form-error" id="loginPasswordError"></div>
+                </div>
+                <button type="submit" class="modal-btn">Кирүү</button>
+                <div class="form-switch">
+                    Аккаунтыңыз жокбу? <a onclick="showRegister()">Катталуу</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+            <h2>Катталуу</h2>
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regName">Атыңыз <span class="required">*</span></label>
+                        <input type="text" id="regName" required>
+                        <div class="form-error" id="regNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regLastName">Фамилияңыз <span class="required">*</span></label>
+                        <input type="text" id="regLastName" required>
+                        <div class="form-error" id="regLastNameError"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email <span class="required">*</span></label>
+                    <input type="email" id="regEmail" required>
+                    <div class="form-error" id="regEmailError"></div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regPhone">Телефон <span class="required">*</span></label>
+                        <input type="tel" id="regPhone" placeholder="+996 XXX XXX XXX" required>
+                        <div class="form-error" id="regPhoneError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regBirthDate">Туулган күнүңүз</label>
+                        <input type="date" id="regBirthDate">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regPassword">Сырсөз <span class="required">*</span></label>
+                        <input type="password" id="regPassword" required>
+                        <div class="form-error" id="regPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="regConfirmPassword">Сырсөз кайталоо <span class="required">*</span></label>
+                        <input type="password" id="regConfirmPassword" required>
+                        <div class="form-error" id="regConfirmPasswordError"></div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="modal-btn">Катталуу</button>
+                <div class="form-switch">
+                    Аккаунтыңыз барбы? <a onclick="showLogin()">Кирүү</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('profileModal')">&times;</button>
+            <h2>Профильди түзөтүү</h2>
+            <form id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileName">Атыңыз</label>
+                        <input type="text" id="profileName">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileLastName">Фамилияңыз</label>
+                        <input type="text" id="profileLastName">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="profileEmail">Email</label>
+                    <input type="email" id="profileEmail">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profilePhone">Телефон</label>
+                        <input type="tel" id="profilePhone" placeholder="+996 XXX XXX XXX">
+                    </div>
+                    <div class="form-group">
+                        <label for="profileBirthDate">Туулган күнүңүз</label>
+                        <input type="date" id="profileBirthDate">
+                    </div>
+                </div>
+                
+                <button type="submit" class="modal-btn">Сактоо</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addressModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('addressModal')">&times;</button>
+            <h2>Дарек кошуу</h2>
+            <form id="addressForm">
+                <div class="form-group">
+                    <label for="addressName">Дарек аталышы <span class="required">*</span></label>
+                    <input type="text" id="addressName" placeholder="Мисалы: Үй, Иш, Ата-энемдин үйү" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addressFull">Толук дарек <span class="required">*</span></label>
+                    <textarea id="addressFull" rows="3" placeholder="Көчө, үй, квартира" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="addressCity">Шаар <span class="required">*</span></label>
+                        <select id="addressCity" required>
+                            <option value="">Шаарды тандаңыз</option>
+                            <option value="Бишкек">Бишкек</option>
+                            <option value="Ош">Ош</option>
+                            <option value="Каракол">Каракол</option>
+                            <option value="Нарын">Нарын</option>
+                            <option value="Талас">Талас</option>
+                            <option value="Джалал-Абад">Джалал-Абад</option>
+                            <option value="Баткен">Баткен</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressPostal">Почта индекси</label>
+                        <input type="text" id="addressPostal" placeholder="720000">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Дарек түрү</label>
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="addressType" value="home" checked> Үй
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="addressType" value="work"> Иш
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="radio" name="addressType" value="other"> Башка
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addressInstructions">Кошумча маалымат</label>
+                    <textarea id="addressInstructions" rows="2" placeholder="Мисалы: Үйдүн алдында тоо, 5-кабат..."></textarea>
+                </div>
+                
+                <button type="submit" class="modal-btn">Дарек кошуу</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-shop"></i>
+                    My<span>shop</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home" class="nav-link nav-active">Башкы барак</a></li>
+                        <li><a href="#categories" class="nav-link">Категориялар</a></li>
+                        <li><a href="#contact" class="nav-link">Байланыш</a></li>
+                    </ul>
+                </nav>
+                <div class="header-actions">
+                    <div class="user-menu" id="userMenu" style="display: none;">
+                        <div class="user-avatar" id="userAvatar"></div>
+                        <div class="user-dropdown">
+                            <a href="#" onclick="showProfile()"><i class="fas fa-user"></i> Менин профилим</a>
+                            <a href="#" onclick="showAddresses()"><i class="fas fa-map-marker-alt"></i> Даректерим</a>
+                            <a href="#"><i class="fas fa-shopping-bag"></i> Заказдарым</a>
+                            <a href="#" onclick="showEditProfile()"><i class="fas fa-edit"></i> Профильди түзөтүү</a>
+                            <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Чыгуу</a>
+                        </div>
+                    </div>
+                    <button class="header-btn" id="loginBtn" onclick="showLogin()">Кирүү / Катталуу</button>
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Кыргыз маркети</h1>
+                <p>Баардык керектелүүчү нерселер ушул жакта</p>
+                <a href="#categories" class="btn">Каталогду көрүү</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Категориялар -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">Категориялар</h2>
+            <div class="category-grid">
+                <!-- Мебелдер -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-chair"></i>
+                    </div>
+                    <h3>Мебелдер</h3>
+                    <p>Дивандар, креслолор, орундуктар</p>
+                    <a href="отург.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+                <!-- Тамак аш -->
+                <div class="category-card">
+                    <div class="category-icon">
+                       <i class="fas fa-hamburger"></i>
+                    </div>
+                    <h3>Тамак аш</h3>
+                    <p>Кроватьтор, төшөктер, комоддор</p>
+                    <a href="Тамак аш.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+                <!-- Телефон -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>Телефон</h3>
+                    <p>iphon,samsung,xiaomi,huawei,oppo</p>
+                    <a href="phon_shop.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+                <!-- Кийимдер -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>Кийимдер</h3>
+                    <p>Рубашка, Свитир</p>
+                    <a href="кийимдер.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+                <!-- Ноутбук -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>Ноутбук</h3>
+                    <p>Apple MacBook Pro 14</p>
+                    <a href="noutbook.html" class="btn">Кененирээк көрүү</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Профиль бөлүмү (скрыт по умолчанию) -->
+    <div id="profilePage" style="display: none;">
+        <section class="profile-container">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 250px 1fr; gap: 2rem;">
+                    <div class="profile-sidebar">
+                        <div class="profile-header">
+                            <div class="profile-avatar" id="profilePageAvatar"></div>
+                            <h3 id="profilePageName"></h3>
+                            <p id="profilePageEmail"></p>
+                        </div>
+                        <ul class="profile-menu">
+                            <li><a href="#profileInfo" class="active" onclick="showProfileSection('profileInfo')"><i class="fas fa-user"></i> Жеке маалымат</a></li>
+                            <li><a href="#profileAddress" onclick="showProfileSection('profileAddress')"><i class="fas fa-map-marker-alt"></i> Даректер</a></li>
+                            <li><a href="#profileOrders" onclick="showProfileSection('profileOrders')"><i class="fas fa-shopping-bag"></i> Заказдар</a></li>
+                            <li><a href="#profileSecurity" onclick="showProfileSection('profileSecurity')"><i class="fas fa-lock"></i> Коопсуздук</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="profile-content">
+                        <div id="profileInfo" class="profile-section">
+                            <h3>Жеке маалымат</h3>
+                            <div class="info-row">
+                                <div class="info-label">Толук аты:</div>
+                                <div class="info-value" id="profileFullName"></div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Email:</div>
+                                <div class="info-value" id="profileInfoEmail"></div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Телефон:</div>
+                                <div class="info-value" id="profilePhoneNumber"></div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Туулган күнү:</div>
+                                <div class="info-value" id="profileBirthDate"></div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Катталган:</div>
+                                <div class="info-value" id="profileRegistered"></div>
+                            </div>
+                            <button class="btn-edit" onclick="showEditProfile()">Түзөтүү</button>
+                        </div>
+                        
+                        <div id="profileAddress" class="profile-section" style="display: none;">
+                            <h3>Менин даректерим</h3>
+                            <div class="address-list" id="addressList">
+                                <!-- Даректер бул жерге жүктөлөт -->
+                            </div>
+                            <button class="btn-edit" onclick="showAddressModal()">Жаңы дарек кошуу</button>
+                        </div>
+                        
+                        <div id="profileOrders" class="profile-section" style="display: none;">
+                            <h3>Менин заказдарым</h3>
+                            <p>Заказдар жок же система жаңылып жатат</p>
+                        </div>
+                        
+                        <div id="profileSecurity" class="profile-section" style="display: none;">
+                            <h3>Коопсуздук</h3>
+                            <div class="info-row">
+                                <div class="info-label">Аккаунт статусу:</div>
+                                <div class="info-value">Активдүү</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-label">Акыркы кирүү:</div>
+                                <div class="info-value" id="lastLogin"></div>
+                            </div>
+                            <button class="btn-edit" style="background: #e74c3c;" onclick="logout()">Бардык түзмөктөрдөн чыгуу</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Контакты -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">Байланыш</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Биз менен байланыш</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек, Кыргызстан</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="fas fa-envelope"></i> info@myshop.kg</li>
+                        <li><i class="fas fa-clock"></i> 9:00 - 20:00, Дүйшөмбү-Жума</li>
+                    </ul>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <h3>Суроо калтырыңыз</h3>
+                    <form id="contactForm">
+                        <input type="text" placeholder="Атыңыз" required>
+                        <input type="tel" placeholder="Телефон номериңиз" required>
+                        <input type="email" placeholder="Email" required>
+                        <textarea placeholder="Сурооңуз" rows="4" required></textarea>
+                        <button type="submit" class="btn">Жөнөтүү</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Myshop</h3>
+                    <p>Биз сизге жогорку сапаттагы интернет магазинди сунуштайбыз. Үйүңүздү ыңгайлуу жана жайлуу кылыңыз!</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категориялар</h3>
+                    <ul>
+                        <li><a href="отург.html">Отургучтар</a></li>
+                        <li><a href="Ашкана.html">Ашкана мебели</a></li>
+                        <li><a href="Жатак.html">Жатак бөлмөсү</a></li>
+                        <li><a href="кинотеатр.html">Үй кинотеатры</a></li>
+                        <li><a href="#">Офис мебели</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="#about">Биз жөнүндө</a></li>
+                        <li><a href="#">Жеткирүү шарттары</a></li>
+                        <li><a href="#">Кепилдик</a></li>
+                        <li><a href="#">Карьера</a></li>
+                        <li><a href="#">Блог</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек, Кыргызстан</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="fas fa-envelope"></i> info@myshop.kg</li>
+                        <li><i class="fas fa-clock"></i> 9:00 - 20:00, Дүйшөмбү-Жума</li>
+                        <li><i class="fas fa-truck"></i> Бесплатная доставка по городу</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2026 Myshop- Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Глобальные переменные
+    let currentUser = null;
+    let userAddresses = [];
+
+    // Проверка авторизации при загрузке страницы
+    document.addEventListener('DOMContentLoaded', function() {
+        checkAuth();
+        loadUserAddresses();
+        
+        // Навигация баскычтары
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+        
+        // Активдүү баскычты өзгөртүү
+        function setActiveLink() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('nav-active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('nav-active');
+                }
+            });
+        }
+        
+        // Скроллдоо
+        window.addEventListener('scroll', setActiveLink);
+        
+        // Навигацияга клик
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#home') {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    const targetSection = document.querySelector(targetId);
+                    if (targetSection) {
+                        window.scrollTo({
+                            top: targetSection.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+                
+                // Мобилдик версияда менюну жабуу
+                if (window.innerWidth < 768) {
+                    document.querySelector('nav').style.display = 'none';
+                }
+            });
+        });
+        
+        // Контакт формасы
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (currentUser) {
+                    alert('Сурооңуз жөнөтүлдү! Биз сиз менен жакында байланышабыз.');
+                    this.reset();
+                } else {
+                    alert('Сурооңузду жөнөтүү үчүн катталыңыз же кириңиз!');
+                    showLogin();
+                }
+            });
+        }
+        
+        // Форма логина
+        const loginForm = document.getElementById('loginForm');
+        if (loginForm) {
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                login();
+            });
+        }
+        
+        // Форма регистрации
+        const registerForm = document.getElementById('registerForm');
+        if (registerForm) {
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                register();
+            });
+        }
+        
+        // Форма профиля
+        const profileForm = document.getElementById('profileForm');
+        if (profileForm) {
+            profileForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveProfile();
+            });
+        }
+        
+        // Форма адреса
+        const addressForm = document.getElementById('addressForm');
+        if (addressForm) {
+            addressForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveAddress();
+            });
+        }
+    });
+
+    // Проверка авторизации
+    function checkAuth() {
+        const userData = localStorage.getItem('myshop_user');
+        if (userData) {
+            currentUser = JSON.parse(userData);
+            updateUI();
+        }
+    }
+
+    // Загрузка адресов пользователя
+    function loadUserAddresses() {
+        const addresses = localStorage.getItem('myshop_addresses_' + (currentUser ? currentUser.id : ''));
+        if (addresses) {
+            userAddresses = JSON.parse(addresses);
+        }
+    }
+
+    // Обновление интерфейса
+    function updateUI() {
+        const loginBtn = document.getElementById('loginBtn');
+        const userMenu = document.getElementById('userMenu');
+        const userAvatar = document.getElementById('userAvatar');
+        const profilePage = document.getElementById('profilePage');
+        
+        if (currentUser) {
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (userMenu) userMenu.style.display = 'flex';
+            if (userAvatar) {
+                const initials = getInitials(currentUser.name, currentUser.lastName);
+                userAvatar.textContent = initials;
+            }
+            if (profilePage) {
+                profilePage.style.display = 'none';
+            }
+        } else {
+            if (loginBtn) loginBtn.style.display = 'block';
+            if (userMenu) userMenu.style.display = 'none';
+            if (profilePage) {
+                profilePage.style.display = 'none';
+            }
+        }
+    }
+
+    // Получить инициалы
+    function getInitials(firstName, lastName) {
+        const first = firstName ? firstName.charAt(0).toUpperCase() : '';
+        const last = lastName ? lastName.charAt(0).toUpperCase() : '';
+        return first + last;
+    }
+
+    // Показать профиль
+    function showProfile() {
+        const profilePage = document.getElementById('profilePage');
+        const mainContent = document.querySelector('main');
+        
+        if (profilePage && currentUser) {
+            // Скрыть основной контент
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Показать профиль
+            profilePage.style.display = 'block';
+            
+            // Заполнить данные профиля
+            updateProfilePage();
+            
+            // Показать первый раздел
+            showProfileSection('profileInfo');
+            
+            // Прокрутить вверх
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // Обновить страницу профиля
+    function updateProfilePage() {
+        if (!currentUser) return;
+        
+        // Аватар
+        const profilePageAvatar = document.getElementById('profilePageAvatar');
+        if (profilePageAvatar) {
+            profilePageAvatar.textContent = getInitials(currentUser.name, currentUser.lastName);
+        }
+        
+        // Имя
+        const profilePageName = document.getElementById('profilePageName');
+        if (profilePageName) {
+            profilePageName.textContent = currentUser.name + ' ' + (currentUser.lastName || '');
+        }
+        
+        // Email
+        const profilePageEmail = document.getElementById('profilePageEmail');
+        const profileInfoEmail = document.getElementById('profileInfoEmail');
+        if (profilePageEmail) profilePageEmail.textContent = currentUser.email;
+        if (profileInfoEmail) profileInfoEmail.textContent = currentUser.email;
+        
+        // Полное имя
+        const profileFullName = document.getElementById('profileFullName');
+        if (profileFullName) {
+            profileFullName.textContent = currentUser.name + ' ' + (currentUser.lastName || '');
+        }
+        
+        // Телефон
+        const profilePhoneNumber = document.getElementById('profilePhoneNumber');
+        if (profilePhoneNumber) {
+            profilePhoneNumber.textContent = currentUser.phone || 'Көрсөтүлгөн эмес';
+        }
+        
+        // Дата рождения
+        const profileBirthDate = document.getElementById('profileBirthDate');
+        if (profileBirthDate) {
+            profileBirthDate.textContent = currentUser.birthDate ? formatDate(currentUser.birthDate) : 'Көрсөтүлгөн эмес';
+        }
+        
+        // Дата регистрации
+        const profileRegistered = document.getElementById('profileRegistered');
+        if (profileRegistered) {
+            profileRegistered.textContent = currentUser.registrationDate ? formatDate(currentUser.registrationDate) : formatDate(new Date());
+        }
+        
+        // Последний вход
+        const lastLogin = document.getElementById('lastLogin');
+        if (lastLogin) {
+            lastLogin.textContent = formatDate(new Date());
+        }
+        
+        // Обновить адреса
+        updateAddressList();
+    }
+
+    // Показать раздел профиля
+    function showProfileSection(sectionId) {
+        // Скрыть все разделы
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        
+        // Показать выбранный раздел
+        const selectedSection = document.getElementById(sectionId);
+        if (selectedSection) {
+            selectedSection.style.display = 'block';
+        }
+        
+        // Обновить активное меню
+        document.querySelectorAll('.profile-menu a').forEach(link => {
+            link.classList.remove('active');
+        });
+        
+        const activeLink = document.querySelector(`.profile-menu a[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    // Показать адреса
+    function showAddresses() {
+        showProfile();
+        showProfileSection('profileAddress');
+    }
+
+    // Обновить список адресов
+    function updateAddressList() {
+        const addressList = document.getElementById('addressList');
+        if (!addressList) return;
+        
+        if (userAddresses.length === 0) {
+            addressList.innerHTML = '<p>Даректер жок</p>';
+            return;
+        }
+        
+        let html = '';
+        userAddresses.forEach((address, index) => {
+            const isActive = address.isDefault ? 'active' : '';
+            const typeIcon = address.type === 'home' ? '🏠' : address.type === 'work' ? '🏢' : '📍';
+            
+            html += `
+                <div class="address-item ${isActive}">
+                    <div class="address-item-header">
+                        <strong>${typeIcon} ${address.name}</strong>
+                        <div class="address-actions">
+                            ${address.isDefault ? '<span style="color: #27ae60; font-size: 0.9rem;">Негизги</span>' : 
+                            `<button class="btn-small" onclick="setDefaultAddress(${index})">Негизги кылуу</button>`}
+                            <button class="btn-small delete" onclick="deleteAddress(${index})">Өчүрүү</button>
+                        </div>
+                    </div>
+                    <p>${address.full}</p>
+                    <p>${address.city}${address.postal ? ', ' + address.postal : ''}</p>
+                    ${address.instructions ? `<p><small>${address.instructions}</small></p>` : ''}
+                </div>
+            `;
+        });
+        
+        addressList.innerHTML = html;
+    }
+
+    // Установить адрес по умолчанию
+    function setDefaultAddress(index) {
+        userAddresses.forEach(addr => addr.isDefault = false);
+        userAddresses[index].isDefault = true;
+        saveAddresses();
+        updateAddressList();
+        showNotification('Негизги дарек өзгөртүлдү');
+    }
+
+    // Удалить адрес
+    function deleteAddress(index) {
+        if (confirm('Бул даректи чын эле өчүрүүнү каалайсызбы?')) {
+            userAddresses.splice(index, 1);
+            saveAddresses();
+            updateAddressList();
+            showNotification('Дарек өчүрүлдү');
+        }
+    }
+
+    // Сохранить адреса
+    function saveAddresses() {
+        if (currentUser) {
+            localStorage.setItem('myshop_addresses_' + currentUser.id, JSON.stringify(userAddresses));
+        }
+    }
+
+    // Показать модальное окно логина
+    function showLogin() {
+        closeAllModals();
+        document.getElementById('loginModal').style.display = 'flex';
+    }
+
+    // Показать модальное окно регистрации
+    function showRegister() {
+        closeAllModals();
+        document.getElementById('registerModal').style.display = 'flex';
+    }
+
+    // Показать модальное окно редактирования профиля
+    function showEditProfile() {
+        if (!currentUser) return;
+        
+        document.getElementById('profileName').value = currentUser.name || '';
+        document.getElementById('profileLastName').value = currentUser.lastName || '';
+        document.getElementById('profileEmail').value = currentUser.email || '';
+        document.getElementById('profilePhone').value = currentUser.phone || '';
+        document.getElementById('profileBirthDate').value = currentUser.birthDate || '';
+        
+        closeAllModals();
+        document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    // Показать модальное окно добавления адреса
+    function showAddressModal() {
+        if (!currentUser) {
+            showLogin();
+            return;
+        }
+        
+        // Очистить форму
+        document.getElementById('addressForm').reset();
+        document.getElementById('addressName').value = '';
+        document.getElementById('addressFull').value = '';
+        document.getElementById('addressCity').value = '';
+        document.getElementById('addressPostal').value = '';
+        document.getElementById('addressInstructions').value = '';
+        
+        closeAllModals();
+        document.getElementById('addressModal').style.display = 'flex';
+    }
+
+    // Закрыть все модальные окна
+    function closeAllModals() {
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('registerModal').style.display = 'none';
+        document.getElementById('profileModal').style.display = 'none';
+        document.getElementById('addressModal').style.display = 'none';
+    }
+
+    // Закрыть конкретное модальное окно
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Логин
+    function login() {
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        // Валидация
+        if (!email || !password) {
+            showError('loginEmailError', 'Бардык талааларды толтуруңуз');
+            return;
+        }
+        
+        // Проверка в localStorage
+        const users = JSON.parse(localStorage.getItem('myshop_users') || '[]');
+        const user = users.find(u => (u.email === email || u.phone === email) && u.password === password);
+        
+        if (user) {
+            currentUser = user;
+            localStorage.setItem('myshop_user', JSON.stringify(user));
+            localStorage.setItem('myshop_last_login', new Date().toISOString());
+            
+            closeModal('loginModal');
+            updateUI();
+            loadUserAddresses();
+            showNotification('Кош келиңиз, ' + user.name + '!');
+        } else {
+            showError('loginEmailError', 'Каттоо маалыматы туура эмес');
+        }
+    }
+
+    // Регистрация
+    function register() {
+        const name = document.getElementById('regName').value;
+        const lastName = document.getElementById('regLastName').value;
+        const email = document.getElementById('regEmail').value;
+        const phone = document.getElementById('regPhone').value;
+        const birthDate = document.getElementById('regBirthDate').value;
+        const password = document.getElementById('regPassword').value;
+        const confirmPassword = document.getElementById('regConfirmPassword').value;
+        
+        // Очистка ошибок
+        clearErrors();
+        
+        // Валидация
+        let hasError = false;
+        
+        if (!name) {
+            showError('regNameError', 'Атыңызды киргизиңиз');
+            hasError = true;
+        }
+        
+        if (!lastName) {
+            showError('regLastNameError', 'Фамилияңызды киргизиңиз');
+            hasError = true;
+        }
+        
+        if (!email || !validateEmail(email)) {
+            showError('regEmailError', 'Туура email киргизиңиз');
+            hasError = true;
+        }
+        
+        if (!phone || !validatePhone(phone)) {
+            showError('regPhoneError', 'Туура телефон номерин киргизиңиз');
+            hasError = true;
+        }
+        
+        if (!password || password.length < 6) {
+            showError('regPasswordError', 'Сырсөз кеминде 6 символ болушу керек');
+            hasError = true;
+        }
+        
+        if (password !== confirmPassword) {
+            showError('regConfirmPasswordError', 'Сырсөздөр дал келбейт');
+            hasError = true;
+        }
+        
+        if (hasError) return;
+        
+        // Проверка существующего пользователя
+        const users = JSON.parse(localStorage.getItem('myshop_users') || '[]');
+        if (users.some(u => u.email === email)) {
+            showError('regEmailError', 'Бул email менен катталган колдонуучу бар');
+            return;
+        }
+        
+        if (users.some(u => u.phone === phone)) {
+            showError('regPhoneError', 'Бул телефон менен катталган колдонуучу бар');
+            return;
+        }
+        
+        // Создание пользователя
+        const newUser = {
+            id: Date.now(),
+            name: name,
+            lastName: lastName,
+            email: email,
+            phone: phone,
+            birthDate: birthDate,
+            password: password,
+            registrationDate: new Date().toISOString()
+        };
+        
+        // Сохранение
+        users.push(newUser);
+        localStorage.setItem('myshop_users', JSON.stringify(users));
+        localStorage.setItem('myshop_user', JSON.stringify(newUser));
+        localStorage.setItem('myshop_last_login', new Date().toISOString());
+        
+        currentUser = newUser;
+        closeModal('registerModal');
+        updateUI();
+        loadUserAddresses();
+        showNotification('Катталуу ийгиликтүү аяктады! Кош келиңиз!');
+    }
+
+    // Сохранить профиль
+    function saveProfile() {
+        if (!currentUser) return;
+        
+        const name = document.getElementById('profileName').value;
+        const lastName = document.getElementById('profileLastName').value;
+        const email = document.getElementById('profileEmail').value;
+        const phone = document.getElementById('profilePhone').value;
+        const birthDate = document.getElementById('profileBirthDate').value;
+        
+        // Обновить пользователя
+        currentUser.name = name || currentUser.name;
+        currentUser.lastName = lastName || currentUser.lastName;
+        currentUser.email = email || currentUser.email;
+        currentUser.phone = phone || currentUser.phone;
+        currentUser.birthDate = birthDate || currentUser.birthDate;
+        
+        // Обновить в localStorage
+        localStorage.setItem('myshop_user', JSON.stringify(currentUser));
+        
+        // Обновить в списке пользователей
+        const users = JSON.parse(localStorage.getItem('myshop_users') || '[]');
+        const userIndex = users.findIndex(u => u.id === currentUser.id);
+        if (userIndex !== -1) {
+            users[userIndex] = currentUser;
+            localStorage.setItem('myshop_users', JSON.stringify(users));
+        }
+        
+        closeModal('profileModal');
+        updateUI();
+        updateProfilePage();
+        showNotification('Профиль ийгиликтүү сакталды!');
+    }
+
+    // Сохранить адрес
+    function saveAddress() {
+        if (!currentUser) return;
+        
+        const name = document.getElementById('addressName').value;
+        const full = document.getElementById('addressFull').value;
+        const city = document.getElementById('addressCity').value;
+        const postal = document.getElementById('addressPostal').value;
+        const type = document.querySelector('input[name="addressType"]:checked').value;
+        const instructions = document.getElementById('addressInstructions').value;
+        
+        if (!name || !full || !city) {
+            showNotification('Бардык милдеттүү талааларды толтуруңуз!');
+            return;
+        }
+        
+        const newAddress = {
+            id: Date.now(),
+            name: name,
+            full: full,
+            city: city,
+            postal: postal,
+            type: type,
+            instructions: instructions,
+            isDefault: userAddresses.length === 0 // Первый адрес по умолчанию
+        };
+        
+        userAddresses.push(newAddress);
+        saveAddresses();
+        updateAddressList();
+        
+        closeModal('addressModal');
+        showNotification('Дарек ийгиликтүү кошулду!');
+    }
+
+    // Выход
+    function logout() {
+        if (confirm('Чыгууну каалайсызбы?')) {
+            localStorage.removeItem('myshop_user');
+            currentUser = null;
+            userAddresses = [];
+            updateUI();
+            
+            // Показать основной контент
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'block';
+            });
+            document.getElementById('profilePage').style.display = 'none';
+            
+            showNotification('Ийгиликтүү чыктыңыз');
+        }
+    }
+
+    // Форматировать дату
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ky-KG', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    // Валидация email
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    // Валидация телефона
+    function validatePhone(phone) {
+        const re = /^\+?[0-9\s\-\(\)]{10,}$/;
+        return re.test(phone);
+    }
+
+    // Показать ошибку
+    function showError(elementId, message) {
+        const element = document.getElementById(elementId);
+        if (element) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+    }
+
+    // Очистить ошибки
+    function clearErrors() {
+        document.querySelectorAll('.form-error').forEach(el => {
+            el.style.display = 'none';
+            el.textContent = '';
+        });
+    }
+
+    // Показать уведомление
+    function showNotification(message) {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+        `;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.remove();
+        }, 3000);
+    }
+
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.style.display = 'none';
+        }
+    };
+    </script>
+</body>
+</html>

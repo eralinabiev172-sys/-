@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodExpress - Тамак-аш доставка</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(238, 90, 82, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-icon i {
+            font-size: 24px;
+            color: #ff6b6b;
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .logo-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 18px;
+            padding: 10px 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 25px;
+            font-size: 22px;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #2ecc71;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .hero {
+            padding: 80px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') no-repeat center center/cover;
+            color: white;
+            text-align: center;
+            border-radius: 0 0 40px 40px;
+            margin-bottom: 40px;
+        }
+
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .search-section {
+            margin-bottom: 50px;
+            padding: 20px 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 25px;
+            padding-left: 60px;
+            font-size: 18px;
+            border: 3px solid #ff6b6b;
+            border-radius: 50px;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.2);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #ff6b6b;
+        }
+
+        .search-results-info {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 16px;
+        }
+
+        .clear-search {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+
+        .clear-search:hover {
+            background: #ee5a52;
+            transform: translateY(-2px);
+        }
+
+        .categories {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #ff6b6b;
+            border-radius: 2px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            border: 3px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            border-color: #ff6b6b;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.15);
+        }
+
+        .category-card.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .category-card.active .category-icon {
+            background: white;
+            color: #ff6b6b;
+        }
+
+        .category-icon {
+            width: 80px;
+            height: 80px;
+            background: #ffebee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            color: #ff6b6b;
+            transition: all 0.3s;
+        }
+
+        .category-name {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .category-count {
+            background: #f8f9fa;
+            color: #666;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .category-card.active .category-count {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .food-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+            position: relative;
+        }
+
+        .food-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .food-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 2;
+        }
+
+        .food-badge.hot {
+            background: #ff6b6b;
+        }
+
+        .food-badge.new {
+            background: #3498db;
+        }
+
+        .food-badge.popular {
+            background: #2ecc71;
+        }
+
+        .food-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+            color: white;
+        }
+
+        .food-info {
+            padding: 25px;
+        }
+
+        .food-category {
+            color: #ff6b6b;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .food-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            line-height: 1.3;
+        }
+
+        .food-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            min-height: 60px;
+        }
+
+        .food-restaurant {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #3498db;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .food-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .food-price {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2ecc71;
+        }
+
+        .food-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-add {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #27ae60;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.3);
+        }
+
+        .btn-details {
+            background: #3498db;
+            color: white;
+            border: none;
+            width: 50px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-details:hover {
+            background: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        .promotions {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            border-radius: 30px;
+            padding: 50px;
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.3);
+        }
+
+        .promo-title {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .promo-text {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .promo-list {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .promo-item {
+            text-align: center;
+        }
+
+        .promo-item i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: white;
+        }
+
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cart-content {
+            background: white;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 25px;
+            padding: 30px;
+            position: relative;
+            animation: modalSlideIn 0.4s;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-cart {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-cart:hover {
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(46, 204, 113, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            z-index: 3000;
+            animation: slideInRight 0.5s, slideOutRight 0.5s 2.5s forwards;
+        }
+
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-description {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 25px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: #ff6b6b;
+            transform: translateY(-5px);
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .contact-info li i {
+            margin-right: 15px;
+            color: #ff6b6b;
+            width: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
+        }
+
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+            
+            .food-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 30px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .promo-list {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .food-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .food-footer {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+            
+            .food-actions {
+                width: 100%;
+            }
+            
+            .btn-add {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="logo-text">
+                        <h1>FoodExpress</h1>
+                        <p>30-60 мүнөттө жеткирүү</p>
+                    </div>
+                </div>
+
+                <div class="nav-links">
+                    <a href="#" class="nav-link active">Башкы бет</a>
+                    <a href="#" class="nav-link">Меню</a>
+                    <a href="#" class="nav-link">Ресторандар</a>
+                    <a href="#" class="nav-link">Акциялар</a>
+                    <a href="#" class="nav-link">Биз жөнүндө</a>
+                </div>
+
+                <div class="header-icons">
+                    <div class="cart-icon" onclick="openCart()">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </div>
+                    <div onclick="toggleUserMenu()">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Даамдуу тамактар үйүңүзгө чейин!</h2>
+            <p>Бишкек боюнча 1000+ тамак тарты, 50+ ресторан. Эң мыкты ашпозчүлөрдүн тамактарын татыңыз!</p>
+           
+                
+            
+        </div>
+    </section>
+
+   
+
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Категориялар</h2>
+            <div class="categories-grid" id="categoriesGrid"></div>
+        </div>
+    </section>
+
+    <section class="food-section">
+        <div class="container">
+            <h2 class="section-title" id="foodTitle">Бардык тамактар</h2>
+            <div class="food-grid" id="foodGrid"></div>
+        </div>
+    </section>
+
+    <section class="promotions">
+        <div class="container">
+            <h3 class="promo-title">🎉 АЙРЫКЧА АКЦИЯЛАР 🎉</h3>
+            <p class="promo-text">FoodExpress менен арзандатуулардан пайдаланыңыз!</p>
+            
+            <div class="promo-list">
+                <div class="promo-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h4>БЕШПАМАТ</h4>
+                    <p>1500 сомдон жогору заказдарга</p>
+                </div>
+                
+                <div class="promo-item">
+                    <i class="fas fa-percentage"></i>
+                    <h4>20% АРЗАНДАТУУ</h4>
+                    <p>Алгачкы заказыңыз үчүн</p>
+                </div>
+                
+                <div class="promo-item">
+                    <i class="fas fa-gift"></i>
+                    <h4>БЕЛЕК</h4>
+                    <p>Жумалык мыкты кардарларга</p>
+                </div>
+                
+                <div class="promo-item">
+                    <i class="fas fa-clock"></i>
+                    <h4>ТЕЗ ЖЕТКИРҮҮ</h4>
+                    <p>30-60 мүнөттө үйүңүзгө</p>
+                </div>
+            </div>
+            
+            <button class="btn-add" style="margin-top: 30px; background: white; color: #ff6b6b; padding: 15px 40px; font-size: 18px;" onclick="showOrderModal()">
+                <i class="fas fa-shopping-cart"></i> АЗЫР ЗАКАЗ БЕРҮҮ
+            </button>
+        </div>
+    </section>
+
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <button class="close-cart" onclick="closeCart()">&times;</button>
+            <h3 style="color: #2c3e50; margin-bottom: 20px; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-shopping-cart"></i> Менин себетим
+            </h3>
+            
+            <div id="cartItems" style="max-height: 300px; overflow-y: auto; margin-bottom: 20px;"></div>
+            
+            <div style="border-top: 2px solid #eee; padding-top: 20px;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 20px; font-size: 20px;">
+                    <strong>Жалпы сумма:</strong>
+                    <strong id="cartTotal" style="color: #2ecc71;">0 сом</strong>
+                </div>
+                <button class="btn-add" onclick="checkout()" style="width: 100%; padding: 15px; font-size: 18px;">
+                    <i class="fas fa-credit-card"></i> Заказ берүү
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="notification" class="notification" style="display: none;">
+        <i class="fas fa-check-circle" style="font-size: 24px;"></i>
+        <span id="notificationText">Товар себетке кошулду!</span>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <i class="fas fa-utensils"></i> FoodExpress
+                    </div>
+                    <p class="footer-description">
+                        FoodExpress - Бишкектин эң мыкты тамак доставка кызматы. 
+                        Биз менен даамдуу тамактарды үйүңүздө татыңыз!
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-telegram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категориялар</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="filterByCategory('fastfood')">Фастфуд</a></li>
+                        <li><a href="#" onclick="filterByCategory('national')">Улуттук тамак</a></li>
+                        <li><a href="#" onclick="filterByCategory('pizza')">Пицца</a></li>
+                        <li><a href="#" onclick="filterByCategory('drinks')">Суусундуктар</a></li>
+                        <li><a href="#" onclick="filterByCategory('desserts')">Десерттер</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Ресторандар</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="filterByRestaurant('Burger House')">Burger House</a></li>
+                        <li><a href="#" onclick="filterByRestaurant('Pizza Hot')">Pizza Hot</a></li>
+                        <li><a href="#" onclick="filterByRestaurant('Chicken King')">Chicken King</a></li>
+                        <li><a href="#" onclick="filterByRestaurant('Улуттук тамак')">Улуттук тамак</a></li>
+                        <li><a href="#" onclick="filterByRestaurant('Coffee Time')">Coffee Time</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек, Кыргызстан</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="fas fa-envelope"></i> @foodexpress.kg</li>
+                        <li><i class="fas fa-clock"></i> 9:00 - 23:00, ар дайым</li>
+                        <li><i class="fas fa-truck"></i> 30-60 мүнөттө жеткирүү</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 FoodExpress - Тамак доставка кызматы. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    let cart = JSON.parse(localStorage.getItem('foodCart')) || [];
+    let currentCategory = 'all';
+    let currentSearchTerm = '';
+    let allFoods = [];
+
+    const foodData = {
+        categories: [
+            { id: 'all', name: 'Баары', icon: 'fas fa-utensils', count: 52, color: '#ff6b6b' },
+            { id: 'fastfood', name: 'Фастфуд', icon: 'fas fa-hamburger', count: 12, color: '#e74c3c' },
+            { id: 'national', name: 'Улуттук тамак', icon: 'fas fa-utensils', count: 15, color: '#2ecc71' },
+            { id: 'pizza', name: 'Пицца', icon: 'fas fa-pizza-slice', count: 8, color: '#e67e22' },
+            { id: 'drinks', name: 'Суусундуктар', icon: 'fas fa-wine-glass-alt', count: 10, color: '#3498db' },
+            { id: 'desserts', name: 'Десерттер', icon: 'fas fa-ice-cream', count: 7, color: '#9b59b6' }
+        ],
+        
+        foods: [
+            { id: 1, name: "Чизбургер макси", price: 320, description: "Чоң чизбургер, картошка фри, кока-кола 0.5л", image: "🍔", restaurant: "Burger House", category: "fastfood", badge: "hot" },
+            { id: 2, name: "Куурулган тавук бут", price: 380, description: "3 бут, картошка фри, соус тандаңыз", image: "🍗", restaurant: "Chicken King", category: "fastfood", badge: "new" },
+            { id: 3, name: "Хот-дог дуэт", price: 220, description: "2 хот-дог, кетчуп, горчица, пияз", image: "🌭", restaurant: "Fast Food Express", category: "fastfood" },
+            { id: 4, name: "Картошка фри чоң", price: 180, description: "Чоң картошка фри, 3 соус менен", image: "🍟", restaurant: "Burger House", category: "fastfood" },
+            { id: 5, name: "Наггетс (10 даана)", price: 280, description: "Куурулган наггетс, соус тандаңыз", image: "🍗", restaurant: "Chicken King", category: "fastfood", badge: "hot" },
+            { id: 6, name: "Чикенбургер", price: 250, description: "Тавук гамбургер, салат, соус", image: "🍔", restaurant: "Burger House", category: "fastfood" },
+            { id: 7, name: "Картошка гөжө", price: 200, description: "Картошка гөжө, сыр, бекон", image: "🥔", restaurant: "Fast Food Express", category: "fastfood" },
+            { id: 8, name: "Тавук сендвич", price: 190, description: "Тавук сендвич, салат, соус", image: "🥪", restaurant: "Chicken King", category: "fastfood" },
+            { id: 9, name: "Бифбургер", price: 350, description: "Уй эти менен бургер, чипсы", image: "🍔", restaurant: "Burger House", category: "fastfood", badge: "popular" },
+            { id: 10, name: "Картошка башмак", price: 210, description: "Картошка башмак, сыр соусу", image: "🥔", restaurant: "Fast Food Express", category: "fastfood" },
+            { id: 11, name: "Тавук канат", price: 320, description: "6 канат, соус, чипсы", image: "🍗", restaurant: "Chicken King", category: "fastfood" },
+            { id: 12, name: "Бургер комбо", price: 450, description: "Бургер, картошка, кола", image: "🍔", restaurant: "Burger House", category: "fastfood", badge: "popular" },
+            
+            { id: 13, name: "Плов казанда", price: 1250, description: "Казандый плов, жыттуу эт, жасмурут, ачыкча", image: "🍚", restaurant: "Атай үй", category: "national", badge: "hot" },
+            { id: 14, name: "Манты (12 даана)", price: 480, description: "Жумшак манты, каймак, уксус, пияз", image: "🥟", restaurant: "Улуттук тамак", category: "national" },
+            { id: 15, name: "Лагман атай", price: 350, description: "Узун лагман, куш эти, жашылча көп", image: "🍜", restaurant: "Дөңгөн Апа", category: "national", badge: "new" },
+            { id: 16, name: "Бешбармак", price: 580, description: "Казак бешбармагы, катык, пияз", image: "🥘", restaurant: "Тундук даам", category: "national" },
+            { id: 17, name: "Самса (3 даана)", price: 180, description: "Жумшак самса, эт же картошка", image: "🥟", restaurant: "Улуттук тамак", category: "national" },
+            { id: 18, name: "Шорпо", price: 220, description: "Эт шорпосу, нан, пияз", image: "🍲", restaurant: "Атай үй", category: "national" },
+            { id: 19, name: "Үй мантысы", price: 420, description: "Үйдө жасалган манты, каймак", image: "🥟", restaurant: "Атай үй", category: "national", badge: "popular" },
+            { id: 20, name: "Куурдак", price: 380, description: "Куурдак, картошка, эт", image: "🍖", restaurant: "Тундук даам", category: "national" },
+            { id: 21, name: "Чучпара (20 даана)", price: 350, description: "Чучпара, сүзмө, пияз", image: "🥟", restaurant: "Улуттук тамак", category: "national" },
+            { id: 22, name: "Аш", price: 280, description: "Куурулган аш, эт, жашылча", image: "🍲", restaurant: "Дөңгөн Апа", category: "national" },
+            { id: 23, name: "Кеспе", price: 320, description: "Уйдун эти менен кесме", image: "🍜", restaurant: "Атай үй", category: "national" },
+            { id: 24, name: "Манты с картошкой", price: 400, description: "Манты картошкалуу, каймак", image: "🥟", restaurant: "Улуттук тамак", category: "national" },
+            { id: 25, name: "Бозо", price: 150, description: "Улуттук суусундук, муздак", image: "🥣", restaurant: "Тундук даам", category: "national" },
+            { id: 26, name: "Ганфан", price: 300, description: "Куурулган турама, кесме", image: "🍜", restaurant: "Дөңгөн Апа", category: "national" },
+            { id: 27, name: "Жарма", price: 250, description: "Буудай жармасы, эт", image: "🍲", restaurant: "Атай үй", category: "national" }
+        ]
+    };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('Сайт жүктөлүүдө...');
+        
+        // Тамактарды жүктөө
+        allFoods = [...foodData.foods];
+        console.log('Тамактар жүктөлдү: ' + allFoods.length + ' даана');
+        
+        // Функцияларды чакыруу
+        loadCategories();
+        loadFoods();
+        updateCartDisplay();
+        
+        // Event listenerлерди кошуу
+        setupEventListeners();
+        
+        // Биринчи жолу келгендерге уведомление
+        if (!localStorage.getItem('firstVisit')) {
+            localStorage.setItem('firstVisit', 'true');
+            setTimeout(function() {
+                showNotification('FoodExpress сайтына кош келиңиз!');
+            }, 1000);
+        }
+    });
+
+    function loadCategories() {
+        const container = document.getElementById('categoriesGrid');
+        if (!container) {
+            console.error('Категориялар контейнери табылган жок!');
+            return;
+        }
+        
+        container.innerHTML = '';
+        
+        foodData.categories.forEach(function(category) {
+            const categoryCard = document.createElement('div');
+            categoryCard.className = 'category-card ' + (category.id === currentCategory ? 'active' : '');
+            categoryCard.onclick = function() {
+                filterByCategory(category.id);
+            };
+            
+            categoryCard.innerHTML = '<div class="category-icon" style="background: ' + category.color + '20; color: ' + category.color + ';">' +
+                                    '<i class="' + category.icon + '"></i></div>' +
+                                    '<div class="category-name">' + category.name + '</div>' +
+                                    '<span class="category-count">' + category.count + ' тамак</span>';
+            
+            container.appendChild(categoryCard);
+        });
+        
+        console.log('Категориялар жүктөлдү: ' + foodData.categories.length + ' даана');
+    }
+
+    function loadFoods() {
+        const foodGrid = document.getElementById('foodGrid');
+        const foodTitle = document.getElementById('foodTitle');
+        
+        if (!foodGrid) {
+            console.error('Тамактар контейнери табылган жок!');
+            return;
+        }
+        
+        if (!foodTitle) {
+            console.error('Тамактар аталышы табылган жок!');
+            return;
+        }
+        
+        foodGrid.innerHTML = '';
+        
+        // Фильтрлөө
+        let filteredFoods = allFoods;
+        if (currentCategory !== 'all') {
+            filteredFoods = allFoods.filter(function(food) {
+                return food.category === currentCategory;
+            });
+        }
+        
+        // Аталышты жаңыртуу
+        const category = foodData.categories.find(function(c) {
+            return c.id === currentCategory;
+        });
+        foodTitle.textContent = category ? category.name : 'Бардык тамактар';
+        
+        // Тамак карточкаларын түзүү
+        console.log('Фильтрленген тамактар: ' + filteredFoods.length + ' даана');
+        
+        filteredFoods.forEach(function(food) {
+            const foodCard = createFoodCard(food);
+            foodGrid.appendChild(foodCard);
+        });
+    }
+
+    function createFoodCard(food) {
+        const foodCard = document.createElement('div');
+        foodCard.className = 'food-card';
+        
+        // Badge түзүү
+        let badgeHTML = '';
+        if (food.badge) {
+            let badgeText = '';
+            switch(food.badge) {
+                case 'hot': badgeText = '🔥 Ысык'; break;
+                case 'new': badgeText = '🆕 Жаңы'; break;
+                case 'popular': badgeText = '⭐ Популярдуу'; break;
+                case 'discount': badgeText = '💲 Арзандатуу'; break;
+                default: badgeText = food.badge;
+            }
+            
+            badgeHTML = '<div class="food-badge ' + food.badge + '">' + badgeText + '</div>';
+        }
+        
+        // Категория түсү
+        const categoryColor = (foodData.categories.find(function(c) {
+            return c.id === food.category;
+        }) || {}).color || '#ff6b6b';
+        
+        // HTML түзүү
+        foodCard.innerHTML = badgeHTML +
+            '<div class="food-image" style="background: linear-gradient(135deg, ' + categoryColor + '40, ' + categoryColor + '80);">' +
+            food.image +
+            '</div>' +
+            '<div class="food-info">' +
+            '<div class="food-category">' + getCategoryName(food.category) + '</div>' +
+            '<h3 class="food-title">' + food.name + '</h3>' +
+            '<p class="food-description">' + food.description + '</p>' +
+            '<div class="food-restaurant">' +
+            '<i class="fas fa-store"></i> ' + food.restaurant +
+            '</div>' +
+            '<div class="food-footer">' +
+            '<div>' +
+            '<div class="food-price">' + food.price + ' сом</div>' +
+            '</div>' +
+            '<div class="food-actions">' +
+            '<button class="btn-add" onclick="addToCart(' + food.id + ')">' +
+            '<i class="fas fa-cart-plus"></i> Себетке' +
+            '</button>' +
+            '<button class="btn-details" onclick="showFoodDetails(' + food.id + ')">' +
+            '<i class="fas fa-info"></i>' +
+            '</button>' +
+            '</div>' +
+            '</div>' +
+            '</div>';
+        
+        return foodCard;
+    }
+
+    function filterByCategory(categoryId) {
+        console.log('Категорияга фильтр: ' + categoryId);
+        currentCategory = categoryId;
+        
+        loadCategories();
+        loadFoods();
+        
+        // Скролл
+        const foodTitle = document.getElementById('foodTitle');
+        if (foodTitle) {
+            foodTitle.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+
+    function filterByRestaurant(restaurantName) {
+        const filteredFoods = allFoods.filter(function(food) {
+            return food.restaurant === restaurantName;
+        });
+        
+        const foodGrid = document.getElementById('foodGrid');
+        const foodTitle = document.getElementById('foodTitle');
+        
+        if (!foodGrid || !foodTitle) return;
+        
+        foodGrid.innerHTML = '';
+        foodTitle.textContent = restaurantName + ' ресторанынын тамактары';
+        
+        filteredFoods.forEach(function(food) {
+            const foodCard = createFoodCard(food);
+            foodGrid.appendChild(foodCard);
+        });
+    }
+
+    function getCategoryName(categoryId) {
+        const category = foodData.categories.find(function(c) {
+            return c.id === categoryId;
+        });
+        return category ? category.name : categoryId;
+    }
+
+    function addToCart(foodId) {
+        const food = allFoods.find(function(f) {
+            return f.id === foodId;
+        });
+        if (!food) return;
+        
+        const existingItem = cart.find(function(item) {
+            return item.id === foodId;
+        });
+        
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({
+                id: food.id,
+                name: food.name,
+                price: food.price,
+                image: food.image,
+                quantity: 1
+            });
+        }
+        
+        updateCartDisplay();
+        showNotification(food.name + ' себетке кошулду!');
+        saveCartToLocalStorage();
+    }
+
+    function updateCartDisplay() {
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        
+        if (!cartCount || !cartItems || !cartTotal) return;
+        
+        const totalItems = cart.reduce(function(sum, item) {
+            return sum + item.quantity;
+        }, 0);
+        cartCount.textContent = totalItems;
+        
+        if (cart.length === 0) {
+            cartItems.innerHTML = '<div style="text-align: center; padding: 40px 20px; color: #888;">' +
+                                 '<i class="fas fa-shopping-basket" style="font-size: 60px; margin-bottom: 20px; color: #ddd;"></i>' +
+                                 '<h4>Себет бош</h4>' +
+                                 '<p>Тамак кошуу үчүн "Себетке кошуу" баскычын басыңыз</p>' +
+                                 '</div>';
+            cartTotal.textContent = '0 сом';
+        } else {
+            let total = 0;
+            let itemsHTML = '';
+            
+            cart.forEach(function(item, index) {
+                total += item.price * item.quantity;
+                itemsHTML += '<div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; gap: 15px;">' +
+                            '<div style="font-size: 30px;">' + item.image + '</div>' +
+                            '<div style="flex: 1;">' +
+                            '<div style="font-weight: 600; margin-bottom: 5px;">' + item.name + '</div>' +
+                            '<div style="color: #2ecc71; font-weight: bold;">' + item.price + ' сом x ' + item.quantity + '</div>' +
+                            '</div>' +
+                            '<div style="display: flex; align-items: center; gap: 10px;">' +
+                            '<button onclick="updateQuantity(' + index + ', -1)" style="background: #ff6b6b; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">-</button>' +
+                            '<span style="font-weight: 600;">' + item.quantity + '</span>' +
+                            '<button onclick="updateQuantity(' + index + ', 1)" style="background: #2ecc71; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer;">+</button>' +
+                            '<button onclick="removeFromCart(' + index + ')" style="background: #e74c3c; color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; margin-left: 10px;">' +
+                            '<i class="fas fa-trash"></i>' +
+                            '</button>' +
+                            '</div>' +
+                            '</div>';
+            });
+            
+            cartItems.innerHTML = itemsHTML;
+            cartTotal.textContent = total + ' сом';
+        }
+    }
+
+    function updateQuantity(index, change) {
+        cart[index].quantity += change;
+        
+        if (cart[index].quantity <= 0) {
+            cart.splice(index, 1);
+        }
+        
+        updateCartDisplay();
+        saveCartToLocalStorage();
+    }
+
+    function removeFromCart(index) {
+        const itemName = cart[index].name;
+        cart.splice(index, 1);
+        updateCartDisplay();
+        showNotification(itemName + ' себеттен чыгарылды!');
+        saveCartToLocalStorage();
+    }
+
+    function saveCartToLocalStorage() {
+        localStorage.setItem('foodCart', JSON.stringify(cart));
+    }
+
+    function openCart() {
+        const cartModal = document.getElementById('cartModal');
+        if (cartModal) {
+            cartModal.style.display = 'flex';
+        }
+    }
+
+    function closeCart() {
+        const cartModal = document.getElementById('cartModal');
+        if (cartModal) {
+            cartModal.style.display = 'none';
+        }
+    }
+
+    function showFoodDetails(foodId) {
+        const food = allFoods.find(function(f) {
+            return f.id === foodId;
+        });
+        if (!food) return;
+        
+        const modalHTML = '<div style="text-align: center;">' +
+                         '<div style="font-size: 80px; margin-bottom: 20px;">' + food.image + '</div>' +
+                         '<h3 style="color: #2c3e50; margin-bottom: 10px;">' + food.name + '</h3>' +
+                         '<div style="color: #ff6b6b; font-size: 18px; margin-bottom: 20px;">' +
+                         '<i class="fas fa-store"></i> ' + food.restaurant +
+                         '</div>' +
+                         '<div style="background: #f8f9fa; padding: 20px; border-radius: 15px; margin-bottom: 20px;">' +
+                         '<p style="color: #666; line-height: 1.6;">' + food.description + '</p>' +
+                         '</div>' +
+                         '<div style="font-size: 32px; color: #2ecc71; font-weight: bold; margin-bottom: 25px;">' +
+                         food.price + ' сом' +
+                         '</div>' +
+                         '<button class="btn-add" onclick="addToCart(' + food.id + '); closeFoodDetails();" style="width: 100%; padding: 15px; font-size: 18px;">' +
+                         '<i class="fas fa-cart-plus"></i> Себетке кошуу' +
+                         '</button>' +
+                         '</div>';
+        
+        const modal = document.createElement('div');
+        modal.className = 'cart-modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = '<div class="cart-content">' +
+                         '<button class="close-cart" onclick="closeFoodDetails()">&times;</button>' +
+                         modalHTML +
+                         '</div>';
+        
+        modal.id = 'foodDetailModal';
+        document.body.appendChild(modal);
+    }
+
+    function closeFoodDetails() {
+        const modal = document.getElementById('foodDetailModal');
+        if (modal) {
+            modal.style.display = 'none';
+            setTimeout(function() {
+                modal.remove();
+            }, 300);
+        }
+    }
+
+    function showOrderModal() {
+        if (cart.length === 0) {
+            showNotification('Алгач себетке тамак кошуңуз!');
+            openCart();
+            return;
+        }
+        
+        const modalHTML = '<h3 style="color: #2c3e50; margin-bottom: 20px;">Заказ берүү</h3>' +
+                         '<div style="margin-bottom: 20px;">' +
+                         '<input type="text" id="orderName" placeholder="Атыңыз" style="width: 100%; padding: 15px; margin-bottom: 15px; border: 2px solid #eee; border-radius: 10px; font-size: 16px;">' +
+                         '<input type="tel" id="orderPhone" placeholder="Телефон номериңиз" style="width: 100%; padding: 15px; margin-bottom: 15px; border: 2px solid #eee; border-radius: 10px; font-size: 16px;">' +
+                         '<input type="text" id="orderAddress" placeholder="Дарегиңиз" style="width: 100%; padding: 15px; margin-bottom: 15px; border: 2px solid #eee; border-radius: 10px; font-size: 16px;">' +
+                         '<textarea id="orderNotes" placeholder="Кошумча эскертүүлөр" style="width: 100%; padding: 15px; margin-bottom: 20px; border: 2px solid #eee; border-radius: 10px; font-size: 16px; height: 100px;"></textarea>' +
+                         '</div>' +
+                         '<button class="btn-add" onclick="submitOrder()" style="width: 100%; padding: 15px; font-size: 18px;">' +
+                         '<i class="fas fa-paper-plane"></i> Заказды жөнөтүү' +
+                         '</button>';
+        
+        const modal = document.createElement('div');
+        modal.className = 'cart-modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = '<div class="cart-content">' +
+                         '<button class="close-cart" onclick="closeOrderModal()">&times;</button>' +
+                         modalHTML +
+                         '</div>';
+        
+        modal.id = 'orderModal';
+        document.body.appendChild(modal);
+    }
+
+    function closeOrderModal() {
+        const modal = document.getElementById('orderModal');
+        if (modal) {
+            modal.style.display = 'none';
+            setTimeout(function() {
+                modal.remove();
+            }, 300);
+        }
+    }
+
+    function submitOrder() {
+        const name = document.getElementById('orderName');
+        const phone = document.getElementById('orderPhone');
+        const address = document.getElementById('orderAddress');
+        
+        if (!name || !phone || !address) return;
+        
+        if (!name.value || !phone.value || !address.value) {
+            showNotification('Баарын толтуруңуз!');
+            return;
+        }
+        
+        if (cart.length === 0) {
+            showNotification('Себет бош!');
+            return;
+        }
+        
+        const total = cart.reduce(function(sum, item) {
+            return sum + (item.price * item.quantity);
+        }, 0);
+        const notes = document.getElementById('orderNotes') ? document.getElementById('orderNotes').value : '';
+        
+        alert('✅ ЗАКАЗ ИЙГИЛИКТҮҮ БЕРИЛДИ!\n\n👤 Атыңыз: ' + name.value + '\n📞 Телефон: ' + phone.value + '\n🏠 Дарегиңиз: ' + address.value + '\n💰 Жалпы сумма: ' + total + ' сом' + (notes ? '\n📝 Эскертүү: ' + notes + '\n' : '') + '\nБиз сиз менен 5-10 мүнөттүн ичинде байланышабыз!');
+        
+        cart = [];
+        updateCartDisplay();
+        saveCartToLocalStorage();
+        
+        closeOrderModal();
+        showNotification('Заказ ийгиликтүү берилди! Жакында байланышабыз.');
+    }
+
+    function checkout() {
+        closeCart();
+        showOrderModal();
+    }
+
+    function showNotification(message) {
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        
+        if (!notification || !notificationText) return;
+        
+        notificationText.textContent = message;
+        notification.style.display = 'flex';
+        
+        setTimeout(function() {
+            notification.style.display = 'none';
+        }, 3000);
+    }
+
+    function setupEventListeners() {
+        // Категорияларды кликтоо
+        document.querySelectorAll('.footer-links a').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+        
+        // Навигация
+        document.querySelectorAll('.nav-link').forEach(function(link) {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(function(l) {
+                    l.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                if (this.textContent === 'Башкы бет') {
+                    filterByCategory('all');
+                }
+            });
+        });
+        
+        // ESC басканда модалдарды жабуу
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCart();
+                closeOrderModal();
+                closeFoodDetails();
+            }
+        });
+        
+        // Сырткы клик менен модалдарды жабуу
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('cart-modal')) {
+                e.target.style.display = 'none';
+                if (e.target.id === 'foodDetailModal' || e.target.id === 'orderModal') {
+                    setTimeout(function() {
+                        e.target.remove();
+                    }, 300);
+                }
+            }
+        });
+    }
+
+    function toggleUserMenu() {
+        showNotification('Колдонуучу менин профили жасалууда...');
+    }
+</script>   

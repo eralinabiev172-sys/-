@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ашкана мебелдери - EmerekStore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #e67e22;
+        }
+
+        .logo span {
+            color: #e67e22;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: all 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e67e22;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Ашкана бөлүмү үчүн өзгөчө стилдер */
+        .kitchen-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(52, 73, 94, 0.9)), 
+                        url('https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .kitchen-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .kitchen-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .subcategories {
+            margin: 3rem 0;
+        }
+
+        .subcategory-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .subcategory-tab {
+            padding: 1rem 2rem;
+            background: #f8f9fa;
+            border: 2px solid #e67e22;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #2c3e50;
+            transition: all 0.3s;
+        }
+
+        .subcategory-tab:hover,
+        .subcategory-tab.active {
+            background: #e67e22;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* Ашкана продукциясы */
+        .kitchen-products {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            color: #2c3e50;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #e67e22;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .product-description {
+            color: #7f8c8d;
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            margin-bottom: 0.5rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-features li i {
+            color: #2ecc71;
+            margin-right: 0.5rem;
+            min-width: 16px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart {
+            background: #e67e22;
+            color: white;
+            border: 2px solid #e67e22;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .add-to-cart:hover {
+            background: transparent;
+            color: #e67e22;
+            transform: translateY(-2px);
+        }
+
+        .btn-details {
+            background: #3498db;
+            color: white;
+            border: 2px solid #3498db;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-details:hover {
+            background: transparent;
+            color: #3498db;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            color: #e67e22;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Мобилдик версия */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .kitchen-header h1 {
+                font-size: 2.5rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-couch"></i>
+                    Emerek<span>Store</span>
+                </div>
+                <nav>
+                  
+                </nav>
+                <a href="#" class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Ашкана Header -->
+    <section class="kitchen-header">
+        <div class="container">
+            <div class="kitchen-header-content">
+                <h1>Ашкана мебелдери</h1>
+                <p>Сиздин ашканаңызга ылайыктуу жогорку сапаттагы столдор, орундуктар, шкафтар жана комплекттер</p>
+            </div>
+        </div>
+    </section>
+
+   
+    <!-- Ашкана продукциясы -->
+    <section class="kitchen-products">
+        <div class="container">
+            <h2 class="section-title">Ашкана буюмдары</h2>
+            
+            <div class="product-grid">
+                <!-- Ашкана столдору 1 -->
+                <div class="product-card" data-category="tables">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ас үй столу">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ас үй столу</h3>
+                        <p class="product-description">4-6 адамга ылайыктуу чоң стол, жыгачтан жасалган</p>
+                        <div class="product-price">15,000 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Натуралдык жыгач</li>
+                            <li><i class="fas fa-check"></i> 4 адамга ылайыктуу</li>
+                            <li><i class="fas fa-check"></i> Жеңил тазалоо</li>
+                            <li><i class="fas fa-check"></i> 9 жыл кепилдик</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="table1" data-name="Ас үй столу" data-price="15000">Сатып алуу</button>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ашкана орундуктары 1 -->
+                <div class="product-card" data-category="chairs">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ашкана орунчугу">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Заманбап орундук</h3>
+                        <p class="product-description">Ыңгайлуу жана стилдүү ашкана орунчугу</p>
+                        <div class="product-price">5,000 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Жумшак ткань</li>
+                            <li><i class="fas fa-check"></i> Ортопедиялык база</li>
+                            <li><i class="fas fa-check"></i> 4 түстө</li>
+                            <li><i class="fas fa-check"></i> Жеңил жуу</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="chair1" data-name="Заманбап орундук" data-price="5000">Сатып алуу</button>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ашкана шкафтары 1 -->
+                <div class="product-card" data-category="cabinets">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ашкана шкафы">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Жыгач шкаф</h3>
+                        <p class="product-description">Көп бөлмөлүү, сапаттуу жыгачтан жасалган</p>
+                        <div class="product-price">25,000 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> MDF панелдер</li>
+                            <li><i class="fas fa-check"></i> 6 бөлмө</li>
+                            <li><i class="fas fa-check"></i> Ачкыч менен</li>
+                            <li><i class="fas fa-check"></i> 7 жыл кепилдик</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="cabinet1" data-name="Жыгач шкаф" data-price="25000">Сатып алуу</button>
+                         
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ашкана комплекстери 1 -->
+                <div class="product-card" data-category="sets">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Ашкана комплекти">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Ашкана комплекти</h3>
+                        <p class="product-description">Толук комплект: стол, 4 орундук, шкаф</p>
+                        <div class="product-price">40,000 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Толук комплект</li>
+                            <li><i class="fas fa-check"></i> Бесплатный монтаж</li>
+                            <li><i class="fas fa-check"></i> 4 орундук</li>
+                            <li><i class="fas fa-check"></i> 6 жыл кепилдик</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="set1" data-name="Ашкана комплекти" data-price="40000">Сатып алуу</button>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ашкана столдору 2 -->
+                <div class="product-card" data-category="tables">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1499933374294-4584851497cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Кофе столу">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Кофе столу</h3>
+                        <p class="product-description">Кичинекей, ыңгайлуу дизайн, жыгачтан</p>
+                        <div class="product-price">8,500 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Кичинекей дизайн</li>
+                            <li><i class="fas fa-check"></i> Жеңил жана ыңгайлуу</li>
+                            <li><i class="fas fa-check"></i> 2 түстө</li>
+                            <li><i class="fas fa-check"></i> 4 жыл кепилдик</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="table2" data-name="Кофе столу" data-price="8500">Сатып алуу</button>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ашкана орундуктары 2 -->
+                <div class="product-card" data-category="chairs">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Бар орунчугу">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Бар орунчугу</h3>
+                        <p class="product-description">Бийик, заманбап дизайн, металл негизде</p>
+                        <div class="product-price">7,500 сом</div>
+                        <ul class="product-features">
+                            <li><i class="fas fa-check"></i> Металл негиз</li>
+                            <li><i class="fas fa-check"></i> Регулировкалуу бийиктик</li>
+                            <li><i class="fas fa-check"></i> 3 түстө</li>
+                            <li><i class="fas fa-check"></i> Бекем конструкция</li>
+                        </ul>
+                        <div class="product-actions">
+                            <button class="add-to-cart" data-id="chair2" data-name="Бар орунчугу" data-price="7500">Сатып алуу</button>
+                           
+                        </div>
+                    </div>
+                </div>
+
+                
+
+               
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Ашкана мебелдери</h3>
+                    <p>Биз сизге жогорку сапаттагы ашкана мебелдерин сунуштайбыз. Ашканаңызды ыңгайлуу жана кооз кылыңыз!</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Категориялар</h3>
+                    <ul>
+                        <li><a href="#tables">Столдор</a></li>
+                        <li><a href="#chairs">Орундуктар</a></li>
+                        <li><a href="#cabinets">Шкафтар</a></li>
+                        <li><a href="#sets">Комплекттер</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Кыргызстан. Бишкек</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="fas fa-envelope"></i> @EmerekStore.kg</li>
+                        <li><i class="fas fa-clock"></i> 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 EmerekStore - Ашкана мебелдери. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+
+   <script>
+// Себет системасы
+document.addEventListener('DOMContentLoaded', function() {
+    // Себетти баштоо
+    let cart = JSON.parse(localStorage.getItem('emerekCart')) || [];
+    
+    // Себеттин санын жаңыртуу
+    function updateCartCount() {
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCount = document.querySelector('.cart-count');
+        if (cartCount) {
+            cartCount.textContent = totalItems;
+            cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+        }
+    }
+    
+    // Баштапкы саны жаңыртуу
+    updateCartCount();
+    
+    // Себетке кошуу функциясы
+    function addToCart(productId, productName, productPrice) {
+        // Продуктту табуу же жаңысын түзүү
+        let product = cart.find(item => item.id === productId);
+        
+        if (product) {
+            product.quantity += 1;
+        } else {
+            product = {
+                id: productId,
+                name: productName,
+                price: parseInt(productPrice),
+                quantity: 1
+            };
+            cart.push(product);
+        }
+        
+        // Себетти сактоо
+        localStorage.setItem('emerekCart', JSON.stringify(cart));
+        
+        // Себеттин санын жаңыртуу
+        updateCartCount();
+        
+        // Хабарландыруу көрсөтүү - ТУУРА ВЕРСИЯ
+        showNotification(productName + ' себетке кошулду!');
+    }
+    
+    // Хабарландыруу функциясы
+    function showNotification(message) {
+        // Жаңы хабарландыруу түзүү
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 9999;
+            font-weight: bold;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        `;
+        
+        notification.innerHTML = '<i class="fas fa-check-circle"></i> <span>' + message + '</span>';
+        document.body.appendChild(notification);
+        
+        // 3 секунддан кийин жок кылуу
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+    
+    // Анимация стилдери
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+    
+    // Себетке кошуу баскычтарына иш-аракет кошуу
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.getAttribute('data-id');
+            const productName = this.getAttribute('data-name');
+            const productPrice = this.getAttribute('data-price');
+            
+            addToCart(productId, productName, productPrice);
+        });
+    });
+    
+    // Категорияларды фильтрлөө
+    const tabs = document.querySelectorAll('.subcategory-tab');
+    const products = document.querySelectorAll('.product-card');
+    
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            // Активдүү табты өзгөртүү
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.getAttribute('data-category');
+            
+            // Продукцияларды фильтрлөө
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                    product.style.animation = 'fadeIn 0.5s ease';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Fade in анимациясы
+    const fadeStyle = document.createElement('style');
+    fadeStyle.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(fadeStyle);
+    
+    // Себет иконкасына клик
+    document.querySelector('.cart-icon').addEventListener('click', function(e) {
+        e.preventDefault();
+        showCartModal();
+    });
+    
+    // Себет модалдык терезеси
+    function showCartModal() {
+        // Модалдык терезе түзүү
+        const modal = document.createElement('div');
+        modal.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9998;
+            animation: fadeIn 0.3s ease;
+        `;
+        
+        modal.innerHTML = `
+            <div style="background: white; border-radius: 10px; width: 90%; max-width: 500px; max-height: 80vh; overflow: hidden; animation: slideUp 0.3s ease;">
+                <div style="background: #2c3e50; color: white; padding: 20px; display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0;">Сиздин себет</h3>
+                    <button id="closeCartModal" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">×</button>
+                </div>
+                <div id="cartItems" style="padding: 20px; max-height: 50vh; overflow-y: auto;">
+                    ${cart.length === 0 ? '<p style="text-align: center; color: #7f8c8d;">Себет бош</p>' : ''}
+                </div>
+                <div style="padding: 20px; border-top: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: bold; margin-bottom: 20px;">
+                        <span>Жалпы сумма:</span>
+                        <span>${calculateTotal()} сом</span>
+                    </div>
+                    <button id="checkoutBtn" style="width: 100%; padding: 15px; background: #e67e22; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 1rem;">
+                        Заказ бериш
+                    </button>
+                    ${cart.length > 0 ? '<button id="clearCartBtn" style="width: 100%; padding: 10px; margin-top: 10px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">Себетти бошотуу</button>' : ''}
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // Себеттеги буюмдарды көрсөтүү
+        renderCartItems();
+        
+        // Байланыштар
+        document.getElementById('closeCartModal').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.remove();
+        });
+        
+        if (cart.length > 0) {
+            document.getElementById('checkoutBtn').addEventListener('click', () => {
+                alert('Заказ берилди! Биз сиз менен жакында байланышабыз.');
+                modal.remove();
+            });
+            
+            document.getElementById('clearCartBtn').addEventListener('click', () => {
+                if (confirm('Сиз чын эле себетти бошоткоңуз келеби?')) {
+                    cart = [];
+                    localStorage.setItem('emerekCart', JSON.stringify(cart));
+                    updateCartCount();
+                    modal.remove();
+                    showNotification('Себет бошотулду!');
+                }
+            });
+        }
+    }
+    
+    // Жалпы сумманы эсептөө
+    function calculateTotal() {
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        return total.toLocaleString();
+    }
+    
+    // Себеттеги буюмдарды көрсөтүү
+    function renderCartItems() {
+        const cartItemsContainer = document.getElementById('cartItems');
+        if (!cartItemsContainer) return;
+        
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p style="text-align: center; color: #7f8c8d;">Себет бош</p>';
+            return;
+        }
+        
+        let html = '';
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            html += `
+                <div style="display: flex; align-items: center; padding: 15px; border-bottom: 1px solid #eee; background: #f9f9f9; border-radius: 8px; margin-bottom: 10px;">
+                    <div style="width: 50px; height: 50px; background: #f0f0f0; border-radius: 5px; margin-right: 15px; display: flex; align-items: center; justify-content: center;">
+                        <i class="fas fa-couch" style="color: #7f8c8d;"></i>
+                    </div>
+                    <div style="flex: 1;">
+                        <div style="font-weight: bold; margin-bottom: 5px;">${item.name}</div>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <span style="color: #e67e22; font-weight: bold;">${item.price.toLocaleString()} сом</span>
+                                <span style="margin-left: 10px; color: #7f8c8d;">× ${item.quantity} = ${itemTotal.toLocaleString()} сом</span>
+                            </div>
+                            <button class="removeFromCart" data-id="${item.id}" style="background: #e74c3c; color: white; border: none; border-radius: 3px; padding: 5px 10px; cursor: pointer;">Жок кылуу</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        cartItemsContainer.innerHTML = html;
+        
+        // "Жок кылуу" баскычтарына иш-аракет кошуу
+        document.querySelectorAll('.removeFromCart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                cart = cart.filter(item => item.id !== productId);
+                localStorage.setItem('emerekCart', JSON.stringify(cart));
+                updateCartCount();
+                showCartModal(); // Модалдык терезени жаңыртуу
+                showNotification('Буюм себеттен алынды!');
+            });
+        });
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FashionStore - Кийимдер дүкөнү</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .top-bar {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            padding: 8px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .main-header {
+            padding: 20px 0;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo span {
+            color: #ff6b6b;
+        }
+        
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+            position: relative;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 14px 50px 14px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .search-bar input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+        
+        .search-bar button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+        
+        .header-icon {
+            position: relative;
+            cursor: pointer;
+            color: #555;
+            transition: color 0.3s;
+        }
+        
+        .header-icon:hover {
+            color: #ff6b6b;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* Navigation */
+        .main-nav {
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .nav-list {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+            padding: 15px 0;
+        }
+        
+        .nav-item {
+            margin: 0 20px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: #ff6b6b;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1445205170230-053b83016050?ixlib=rb-4.0.3&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Products */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #333;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            border-radius: 2px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        
+        .product-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #ff6b6b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .product-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-price {
+            font-size: 22px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .product-price .old-price {
+            font-size: 16px;
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 8px;
+        }
+        
+        .add-to-cart {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #ff6b6b;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background: #ff6b6b;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #333;
+            color: #bbb;
+            font-size: 14px;
+        }
+        
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            justify-content: flex-end;
+        }
+        
+        .cart-content {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            height: 100%;
+            overflow-y: auto;
+            animation: slideIn 0.3s ease;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .cart-header {
+            padding: 25px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .cart-items {
+            padding: 20px;
+            min-height: 300px;
+        }
+        
+        .cart-item {
+            display: flex;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            gap: 15px;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 10px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .cart-item-price {
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .cart-footer {
+            padding: 25px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
+        }
+        
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 25px;
+        }
+        
+        .checkout-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        
+        .checkout-btn:hover {
+            opacity: 0.9;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .search-bar {
+                max-width: 100%;
+                margin: 10px 0;
+            }
+            
+            .nav-list {
+                flex-wrap: wrap;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                padding: 60px 0;
+            }
+            
+            .hero h1 {
+                font-size: 28px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .cart-content {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">Эртеңкиге чейин бекер жеткирүү | 70% чегинде арзандатуулар</div>
+        </div>
+        
+        <div class="main-header">
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-tshirt"></i>
+                        Fashion<span>Store</span>
+                    </div>
+                    
+                    <div class="search-bar">
+                        <input type="text" id="searchInput" placeholder="Кийим издөө...">
+                        <button onclick="searchProducts()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="header-actions">
+                        <div class="header-icon" onclick="toggleCart()">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span class="cart-count" id="cartCount">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#" class="nav-link active" onclick="filterByCategory('all')">Башкы бет</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" onclick="filterByCategory('men')">Эркектер</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" onclick="filterByCategory('women')">Аялдар</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" onclick="filterByCategory('kids')">Балдар</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link" onclick="filterByCategory('shoes')">Бут кийим</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>2024 Жаздык Коллекциясы</h1>
+            <p>Стилдүү, ыңгайлуу жана заманбап кийимдер биздин дүкөндө. 50% чегинде арзандатуулар менен жаңы коллекцияны табыңыз.</p>
+            <button class="cta-button" onclick="scrollToProducts()">Коллекцияны көрүү</button>
+        </div>
+    </section>
+    
+    <!-- Products -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title" id="productsTitle">Көп сатылуучу товарлар</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Продуктар бул жерге жүктөлөт -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>FashionStore</h3>
+                    <p>Биз 2020-жылдан бери сизге эң мыкты кийимдерди сунуштап келебиз. Стил, сапат жана ыңгайлуулук - биздин негизги максаттар.</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категориялар</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" onclick="filterByCategory('men')">Эркектер кийимдери</a></li>
+                        <li><a href="#" onclick="filterByCategory('women')">Аялдар кийимдери</a></li>
+                        <li><a href="#" onclick="filterByCategory('kids')">Балдар кийимдери</a></li>
+                        <li><a href="#" onclick="filterByCategory('shoes')">Бут кийим</a></li>
+                        <li><a href="#" onclick="filterByCategory('all')">Баары</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Маалымат</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Биз жөнүндө</a></li>
+                        <li><a href="#">Жеткирүү шарттары</a></li>
+                        <li><a href="#">Кабыл алуу жана кайтаруу</a></li>
+                        <li><a href="#">Конфиденциалдык саясат</a></li>
+                        <li><a href="#">Байланыш</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек ш., Чынгыз Айтматов көч., 45</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="far fa-envelope"></i> info@fashionstore.kg</li>
+                        <li><i class="far fa-clock"></i> Дүйшөмбү-Жума: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2024 FashionStore. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h2><i class="fas fa-shopping-bag"></i> Сиздин себет</h2>
+                <button onclick="toggleCart()" style="background: none; border: none; color: white; font-size: 24px; cursor: pointer;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Себеттеги товарлар бул жерге жүктөлөт -->
+            </div>
+            
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Жалпы сумма:</span>
+                    <span id="cartTotal">0 сом</span>
+                </div>
+                <button class="checkout-btn" onclick="checkout()">
+                    <i class="fas fa-check"></i> Заказ берип жатышат
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Глобалдык өзгөрмөлөр
+        let cart = [];
+        let currentCategory = 'all';
+        
+        // Кийимдердин маалыматтары
+        const productsData = [
+            {
+                id: 1,
+                name: 'Эркек көйнөгү',
+                category: 'men',
+                price: 2499,
+                oldPrice: 3499,
+                description: 'Классикалык кесимдеги ак көйнөк',
+                image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=688&q=80',
+                badge: 'Жаңы'
+            },
+            {
+                id: 2,
+                name: 'Аялдар көйнөгү',
+                category: 'women',
+                price: 3299,
+                oldPrice: 4299,
+                description: 'Гүлдүү жаздык көйнөк',
+                image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+                badge: 'Арзандатуу'
+            },
+            {
+                id: 3,
+                name: 'Джинсы шым',
+                category: 'men',
+                price: 4299,
+                oldPrice: 0,
+                description: 'Классикалык көк джинсы',
+                image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=726&q=80',
+                badge: ''
+            },
+            {
+                id: 4,
+                name: 'Аялдар курткасы',
+                category: 'women',
+                price: 5599,
+                oldPrice: 6999,
+                description: 'Кожан куртка',
+                image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+                badge: '20% арзандатуу'
+            },
+            {
+                id: 5,
+                name: 'Балдар комбинезону',
+                category: 'kids',
+                price: 1899,
+                oldPrice: 2499,
+                description: 'Жумшак жана ыңгайлуу комбинезон',
+                image: 'https://images.unsplash.com/photo-1591955506269-5f9a88bb8c0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+                badge: 'Балдарга'
+            },
+            {
+                id: 6,
+                name: 'Спорттук бут кийим ',
+                category: 'shoes',
+                price: 4899,
+                oldPrice: 0,
+                description: 'Ыңгайлуу спорттук бут кийим',
+                image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1112&q=80',
+                badge: 'Жаңы'
+            },
+            {
+                id: 7,
+                name: 'Аялдар сумочкасы',
+                category: 'women',
+                price: 2899,
+                oldPrice: 3599,
+                description: 'Кожан сумочка',
+                image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=735&q=80',
+                badge: ''
+            },
+            {
+                id: 8,
+                name: 'Эркек футболкасы',
+                category: 'men',
+                price: 1299,
+                oldPrice: 1799,
+                description: 'Көк футболка',
+                image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1160&q=80',
+                badge: '30% арзандатуу'
+            }
+        ];
+        
+        // ДОМ жүктөлгөндө
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+            updateCartDisplay();
+            
+            // Enter баскычы менен издөө
+            document.getElementById('searchInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+            
+            // Себетти localStorageдан жүктөө
+            const savedCart = localStorage.getItem('fashionCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartDisplay();
+            }
+            
+            // Келгин каттоо
+            if (!localStorage.getItem('fashionFirstVisit')) {
+                localStorage.setItem('fashionFirstVisit', 'true');
+                setTimeout(() => {
+                    showNotification('FashionStore дүкөнүнө кош келиңиз!');
+                }, 1000);
+            }
+        });
+        
+        // Продуктарды жүктөө
+        function loadProducts() {
+            const container = document.getElementById('productsGrid');
+            const title = document.getElementById('productsTitle');
+            
+            if (!container) return;
+            
+            // Боштоо
+            container.innerHTML = '';
+            
+            // Фильтрлөө
+            let filteredProducts = productsData;
+            if (currentCategory !== 'all') {
+                filteredProducts = productsData.filter(product => product.category === currentCategory);
+            }
+            
+            // Аталыш жаңыртуу
+            if (title) {
+                if (currentCategory === 'all') {
+                    title.textContent = 'Көп сатылуучу товарлар';
+                } else if (currentCategory === 'men') {
+                    title.textContent = 'Эркектер кийимдери';
+                } else if (currentCategory === 'women') {
+                    title.textContent = 'Аялдар кийимдери';
+                } else if (currentCategory === 'kids') {
+                    title.textContent = 'Балдар кийимдери';
+                } else if (currentCategory === 'shoes') {
+                    title.textContent = 'Бут кийим';
+                }
+            }
+            
+            // Продуктарды түзүү
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                
+                let badgeHTML = '';
+                if (product.badge) {
+                    badgeHTML = `<div class="product-badge">${product.badge}</div>`;
+                }
+                
+                let oldPriceHTML = '';
+                if (product.oldPrice && product.oldPrice > 0) {
+                    oldPriceHTML = `<span class="old-price">${product.oldPrice} сом</span>`;
+                }
+                
+                card.innerHTML = `
+                    <div class="product-image" style="background-image: url('${product.image}')">
+                        ${badgeHTML}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-description">${product.description}</div>
+                        <div class="product-footer">
+                            <div class="product-price">
+                                ${oldPriceHTML}
+                                ${product.price} сом
+                            </div>
+                            <button class="add-to-cart" onclick="addToCart(${product.id})">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+            
+            // Эгерде товар жок болсо
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-tshirt" style="font-size: 70px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Бул категорияда товар жок</h3>
+                        <p>Башка категорияларды караңыз</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Категория боюнча фильтрлөө
+        function filterByCategory(categoryId) {
+            currentCategory = categoryId;
+            
+            // Навигацияны жаңыртуу
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Активдүү каналды белгилөө
+            const activeLinks = document.querySelectorAll('.nav-link');
+            activeLinks.forEach(link => {
+                if (link.getAttribute('onclick') === `filterByCategory('${categoryId}')`) {
+                    link.classList.add('active');
+                }
+            });
+            
+            loadProducts();
+            
+            // Скроллдоо
+            setTimeout(() => {
+                document.querySelector('.products').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }, 100);
+        }
+        
+        // Себетке кошуу
+        function addToCart(productId) {
+            const product = productsData.find(p => p.id === productId);
+            if (!product) return;
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            updateCartDisplay();
+            saveCart();
+            showNotification(product.name + ' себетке кошулду!');
+        }
+        
+        // Себет дисплейин жаңыртуу
+        function updateCartDisplay() {
+            // Себеттеги товарлардын саны
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartCountElement = document.getElementById('cartCount');
+            if (cartCountElement) {
+                cartCountElement.textContent = totalItems;
+            }
+            
+            // Себеттеги товарларды көрсөтүү
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotalElement = document.getElementById('cartTotal');
+            
+            if (!cartItemsContainer || !cartTotalElement) return;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #888;">
+                        <i class="fas fa-shopping-bag" style="font-size: 70px; margin-bottom: 20px; color: #ddd;"></i>
+                        <h3>Себет бош</h3>
+                        <p>Себетке товар кошуңуз</p>
+                    </div>
+                `;
+                cartTotalElement.textContent = '0 сом';
+            } else {
+                let itemsHTML = '';
+                let total = 0;
+                
+                cart.forEach((item, index) => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    itemsHTML += `
+                        <div class="cart-item">
+                            <div class="cart-item-image" style="background-image: url('${item.image}')"></div>
+                            <div class="cart-item-details">
+                                <div class="cart-item-name">${item.name}</div>
+                                <div class="cart-item-price">${item.price} сом</div>
+                                <div class="cart-item-actions">
+                                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, -1)">-</button>
+                                    <span style="font-weight: 600; min-width: 30px; text-align: center;">${item.quantity}</span>
+                                    <button class="quantity-btn" onclick="updateCartQuantity(${index}, 1)">+</button>
+                                    <button style="margin-left: 20px; background: none; border: none; color: #ff4757; cursor: pointer;" onclick="removeFromCart(${index})">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                cartItemsContainer.innerHTML = itemsHTML;
+                cartTotalElement.textContent = total + ' сом';
+            }
+        }
+        
+        // Себеттеги товардын санын өзгөртүү
+        function updateCartQuantity(index, change) {
+            cart[index].quantity += change;
+            
+            if (cart[index].quantity <= 0) {
+                cart.splice(index, 1);
+            }
+            
+            updateCartDisplay();
+            saveCart();
+        }
+        
+        // Себеттен товарды чыгаруу
+        function removeFromCart(index) {
+            const itemName = cart[index].name;
+            cart.splice(index, 1);
+            updateCartDisplay();
+            saveCart();
+            showNotification(itemName + ' себеттен чыгарылды');
+        }
+        
+        // Себетти сактоо
+        function saveCart() {
+            localStorage.setItem('fashionCart', JSON.stringify(cart));
+        }
+        
+        // Себет модалы
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                updateCartDisplay();
+                modal.style.display = 'flex';
+            }
+        }
+        
+        // Издөө
+        function searchProducts() {
+            const input = document.getElementById('searchInput');
+            const searchTerm = input.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                loadProducts();
+                return;
+            }
+            
+            const filteredProducts = productsData.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            
+            const container = document.getElementById('productsGrid');
+            const title = document.getElementById('productsTitle');
+            
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            if (filteredProducts.length === 0) {
+                container.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 60px 20px;">
+                        <i class="fas fa-search" style="font-size: 70px; color: #ddd; margin-bottom: 20px;"></i>
+                        <h3>Товар табылган жок</h3>
+                        <p>"${searchTerm}" издегенде эч кандай натыйжа жок</p>
+                    </div>
+                `;
+                if (title) {
+                    title.textContent = 'Издөө натыйжасы';
+                }
+            } else {
+                if (title) {
+                    title.textContent = 'Издөө натыйжасы: ' + filteredProducts.length + ' товар';
+                }
+                
+                filteredProducts.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    
+                    let badgeHTML = '';
+                    if (product.badge) {
+                        badgeHTML = `<div class="product-badge">${product.badge}</div>`;
+                    }
+                    
+                    let oldPriceHTML = '';
+                    if (product.oldPrice && product.oldPrice > 0) {
+                        oldPriceHTML = `<span class="old-price">${product.oldPrice} сом</span>`;
+                    }
+                    
+                    card.innerHTML = `
+                        <div class="product-image" style="background-image: url('${product.image}')">
+                            ${badgeHTML}
+                        </div>
+                        <div class="product-info">
+                            <div class="product-name">${product.name}</div>
+                            <div class="product-description">${product.description}</div>
+                            <div class="product-footer">
+                                <div class="product-price">
+                                    ${oldPriceHTML}
+                                    ${product.price} сом
+                                </div>
+                                <button class="add-to-cart" onclick="addToCart(${product.id})">
+                                    <i class="fas fa-cart-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(card);
+                });
+            }
+        }
+        
+        // Заказ берүү
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Себет бош!');
+                return;
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            alert('✅ ЗАКАЗ ИЙГИЛИКТҮҮ БЕРИЛДИ!\n\n👕 Товарлар: ' + totalItems + '\n💰 Жалпы сумма: ' + total + ' сом\n\nБиз сиз менен 5-10 мүнөттүн ичинде байланышабыз!');
+            
+            cart = [];
+            updateCartDisplay();
+            saveCart();
+            toggleCart();
+            showNotification('Заказ ийгиликтүү берилди! Рахмат сатып алууңуз үчүн!');
+        }
+        
+        // Уведомление
+        function showNotification(message) {
+            // Жөнөкөй алерт колдонолу
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+                z-index: 3000;
+                animation: slideInRight 0.3s ease;
+                max-width: 350px;
+            `;
+            
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-check-circle" style="font-size: 20px;"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+            
+            // Анимацияны кошуу
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideInRight {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+                @keyframes slideOutRight {
+                    from { transform: translateX(0); opacity: 1; }
+                    to { transform: translateX(100%); opacity: 0; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Скроллдоо
+        function scrollToProducts() {
+            document.querySelector('.products').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+        
+        // Модалдык терезени чыгаруу үчүн
+        window.onclick = function(event) {
+            const modal = document.getElementById('cartModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
+    </script>
+</body>
+</html>

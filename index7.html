@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Отургучтар - Дивандар жана Креслолор</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 15px rgba(139, 69, 19, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: #FFD700;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FFD700;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.3rem;
+            color: white;
+            text-decoration: none;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(rgba(139, 69, 19, 0.8), rgba(160, 82, 45, 0.8)), 
+                        url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 600px;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #FFD700;
+            color: #8B4513;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #FFC107;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Категориялар */
+        .categories {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: #8B4513;
+        }
+
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #8B4513;
+            color: #8B4513;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .tab-btn.active {
+            background: #8B4513;
+            color: white;
+        }
+
+        .tab-btn:hover {
+            background: #8B4513;
+            color: white;
+        }
+
+        /* Продукция */
+        .products {
+            padding: 2rem 0 4rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-img {
+            height: 200px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow: hidden;
+        }
+
+        .product-img img {
+            max-width: 100%;
+            max-height: 100%;
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover .product-img img {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #8B4513;
+        }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .product-features li i {
+            color: #27ae60;
+            margin-right: 0.5rem;
+            width: 16px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-buy {
+            flex: 2;
+            background: #8B4513;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn-buy:hover {
+            background: #A0522D;
+        }
+
+        .btn-details {
+            flex: 1;
+            background: transparent;
+            color: #8B4513;
+            border: 1px solid #8B4513;
+            padding: 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-details:hover {
+            background: #8B4513;
+            color: white;
+        }
+
+        /* Преимущества */
+        .advantages {
+            background: #8B4513;
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .advantage-card {
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .advantage-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: #FFD700;
+        }
+
+        .advantage-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            color: #FFD700;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #FFD700;
+        }
+
+        .contact-info li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contact-info li i {
+            margin-right: 1rem;
+            color: #FFD700;
+            width: 20px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Адаптивдүүлүк */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.3rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .category-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-couch"></i>
+                    Отургучтар
+                </div>
+                <nav>
+                  
+                </nav>
+                <div class="header-actions">
+                    <a href="#" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">2</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Ыңгайлуу Мебелдер</h1>
+                <p>Үйүңүзгө ылайыкталган жогорку сапаттагы дивандар, креслолор жана орундуктар. Арзан баада, кепилдик менен!</p>
+               
+            </div>
+        </div>
+    </section>
+
+     <!-- Категориялар -->
+    <section class="categories" id="categories">
+        <div class="container">
+            <h2 class="section-title">Категориялар</h2>
+            <div class="category-grid">
+
+                 <!-- Ашкана -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Ашкана</h3>
+                    <p>Ашкана комплекстери, столдор, шкафтар</p>
+                  <a href="Ашкана.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+
+                <!-- Үй кинотеатры -->
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <h3>үй буюмдары</h3>
+                    <p>TV стенкалар, полкалар, стендер</p>
+                    <a href="кинотеатр.html" class="btn">Кененирээк көрүү</a>
+                </div>
+
+
+
+            <!-- Продукция -->
+            <div class="products">
+                <div class="product-grid">
+                    <!-- Продукт 1 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1582582621959-48d27397dc69?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="L-формасындагы диван">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">L-формасындагы диван</h3>
+                            <div class="product-price">48,500 сом</div>
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Ортопедиялык база</li>
+                                <li><i class="fas fa-check"></i> Жумшак ткань</li>
+                                <li><i class="fas fa-check"></i> 3 жыл кепилдик</li>
+                                <li><i class="fas fa-check"></i> Бесплатный монтаж</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button class="btn-buy">Сатып алуу</button>
+                                <button class="btn-details"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Продукт 2 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Кожаный диван">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Кожаный диван</h3>
+                            <div class="product-price">35,000 сом</div>
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Натуралдык тері</li>
+                                <li><i class="fas fa-check"></i> Металл каркас</li>
+                                <li><i class="fas fa-check"></i> 10 жыл кепилдик</li>
+                                <li><i class="fas fa-check"></i> Европа сапаты</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button class="btn-buy">Сатып алуу</button>
+                                <button class="btn-details"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Продукт 3 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Кресло-качалка">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Кресло-качалка</h3>
+                            <div class="product-price">17 800 сом</div>
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Качалка механизми</li>
+                                <li><i class="fas fa-check"></i> Жыгач негиз</li>
+                                <li><i class="fas fa-check"></i> Жумшак жаздыктар</li>
+                                <li><i class="fas fa-check"></i> Кол менен жыгач оюу</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button class="btn-buy">Сатып алуу</button>
+                                <button class="btn-details"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Продукт 4 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Угловой диван">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Угловой диван</h3>
+                            <div class="product-price">32,000 сом</div>
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Модулдук система</li>
+                                <li><i class="fas fa-check"></i> Көптөгөн түстөр</li>
+                                <li><i class="fas fa-check"></i> Ички сактоо бөлүмдөрү</li>
+                                <li><i class="fas fa-check"></i> Бесплатный дизайн</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button class="btn-buy">Сатып алуу</button>
+                                <button class="btn-details"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Продукт 5 -->
+                    <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Офис креслосу">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Офис креслосу</h3>
+                            <div class="product-price">25 000 сом</div>
+                            <ul class="product-features">
+                                <li><i class="fas fa-check"></i> Регулировка бийиктиги</li>
+                                <li><i class="fas fa-check"></i> Ортопедиялык арка</li>
+                                <li><i class="fas fa-check"></i> Нейлон дөңгөлөктөр</li>
+                                <li><i class="fas fa-check"></i> 10 жыл кепилдик</li>
+                            </ul>
+                            <div class="product-actions">
+                                <button class="btn-buy">Сатып алуу</button>
+                                <button class="btn-details"><i class="fas fa-info"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+              
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Акции -->
+    <section class="promotions" id="promotions">
+        <div class="container">
+            <h2 class="section-title">Акциялар</h2>
+            <div class="promo-grid">
+                <div class="promo-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Акция 1">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Жайкы акция -20%</h3>
+                        <p>Бардык дивандарга 20% чейин арзандатуу</p>
+                        <div class="product-price">18 000 сом <span class="product-old-price">25 500 сом</span></div>
+                        <button class="btn-buy">Акцияны пайдалануу</button>
+                    </div>
+                </div>
+
+                <div class="promo-card">
+                    <div class="product-img">
+                        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Акция 2">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Бесплатная доставка</h3>
+                        <p>100,000 сомдон жогору заказдарга бесплатная доставка</p>
+                        <button class="btn-buy">Кененирээк</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Преимущества -->
+    <section class="advantages">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Эмне үчүн бизди тандайсыз?</h2>
+            <div class="advantage-grid">
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Кепилдик</h3>
+                    <p>Бардык мебельдерге 2-5 жылга чейин кепилдик берилет</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h3>Бесплатный жеткирүү</h3>
+                    <p>Бишкек шаарында бекер жеткирүү кызматы</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Монтаж</h3>
+                    <p>Бесплатный монтаж жана коюу</p>
+                </div>
+                <div class="advantage-card">
+                    <div class="advantage-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3>Кайтаруу</h3>
+                    <p>14 күнгө чейин товарды кайтаруу укугу</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Отургучтар</h3>
+                    <p>Биз сизге жогорку сапаттагы отургучтарды сунуштайбыз. Үйүңүзгө ыңгайлуулук жана жайлуулук алыңыз!</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Категориялар</h3>
+                    <ul>
+                        <li><a href="#">Дивандар</a></li>
+                        <li><a href="#">Креслолор</a></li>
+                        <li><a href="#">Орундуктар</a></li>
+                        <li><a href="#">Уголдук дивандар</a></li>
+                        <li><a href="#">Офис мебели</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="#">Биз жөнүндө</a></li>
+                        <li><a href="#">Жеткирүү шарттары</a></li>
+                        <li><a href="#">Кепилдик</a></li>
+                        <li><a href="#">Карьера</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Бишкек, Кыргызстан</li>
+                        <li><i class="fas fa-phone"></i> +996 502 526 100</li>
+                        <li><i class="fas fa-envelope"></i> @EmerekStore.kg</li>
+                        <li><i class="fas fa-clock"></i> 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2026 Отургучтар. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Табтарды башкаруу
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Бардык табтарды активсиз кылуу
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                // Чыккан табты активдүү кылуу
+                button.classList.add('active');
+                
+                // Бул жерде продукцияны фильтрлөө логикасы кошулат
+                // Азырынча жөнөкөй болсо да
+            });
+        });
+
+        // Сатып алуу баскычтары
+        document.querySelectorAll('.btn-buy').forEach(button => {
+            button.addEventListener('click', function() {
+                const productName = this.closest('.product-card').querySelector('.product-title').textContent;
+                alert(productName + ' себетиңизге кошулду!');
+                
+                // Корзинаны жаңыртуу
+                const cartCount = document.querySelector('.cart-count');
+                cartCount.textContent = parseInt(cartCount.textContent) + 1;
+            });
+        });
+    </script>
+</body>
+</html>

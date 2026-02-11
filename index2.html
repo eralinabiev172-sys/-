@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ky">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ноутбук Дүкөнү - But Laptop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        /* Header стили */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .logo span {
+            color: #e74c3c;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 2rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #e74c3c;
+        }
+
+        /* Hero бөлүмү */
+        .hero {
+            background: url('https://images.unsplash.com/photo-1593640408182-31c70c8268f5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1342&q=80') no-repeat center center/cover;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #c0392b;
+        }
+
+        /* Продукция бөлүмү */
+        .products {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2rem;
+            color: #2c3e50;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .product-img {
+            height: 200px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .product-img img {
+            max-width: 100%;
+            max-height: 180px;
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            margin-bottom: 0.3rem;
+            color: #7f8c8d;
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column ul li a:hover {
+            color: #e74c3c;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #34495e;
+            color: #bdc3c7;
+        }
+
+        /* Медиа запросы для адаптивности */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">But<span>Laptop</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Башкы барак</a></li>
+                        <li><a href="#">Ноутбуктар</a></li>
+                        <li><a href="#">Аксессуарлар</a></li>
+                        <li><a href="#">Жеткирүү</a></li>
+                        <li><a href="#">Байланыш</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Мыкты ноутбуктар сиз үчүн!</h1>
+                <p>Бизден ар кандай бренддердин жогорку сапаттагы ноутбуктарды сатып алыңыз. Техникалык көмөк жана кепилдик менен!</p>
+                <a href="#" class="btn">Каталогду көрүү</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Продукция -->
+    <section class="products">
+        <div class="container">
+            <h2 class="section-title">Биздин ноутбуктар</h2>
+            <div class="product-grid">
+                <!-- Продукт 1 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/product-small-picturemcp14spg-1200x1200.webp" alt="MacBook Pro">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Apple MacBook Pro 14"</h3>
+                        <div class="product-price">125,000 сом</div>
+                        <ul class="product-features">
+                            <li>M2 Pro процессору</li>
+                            <li>16GB RAM</li>
+                            <li>512GB SSD</li>
+                            <li>14.2" Liquid Retina XDR</li>
+                        </ul>
+                        <a href="#" class="btn">Себетке кошуу</a>
+                    </div>
+                </div>
+
+                <!-- Продукт 2 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/1-1-1200x800.webp"Dell XPS 13">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">Dell XPS 13</h3>
+                        <div class="product-price">75,000 сом</div>
+                        <ul class="product-features">
+                            <li>Intel Core i7</li>
+                            <li>16GB RAM</li>
+                            <li>512GB SSD</li>
+                            <li>13.4" FHD+ экран</li>
+                        </ul>
+                        <a href="#" class="btn">Себетке кошуу</a>
+                    </div>
+                </div>
+
+                <!-- Продукт 3 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/xps-13-9345-laptop-gray-copilot-pc-mg.avif"HP Pavilion">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">HP Pavilion 15</h3>
+                        <div class="product-price">55,000 сом</div>
+                        <ul class="product-features">
+                            <li>AMD Ryzen 5</li>
+                            <li>8GB RAM</li>
+                            <li>256GB SSD</li>
+                            <li>15.6" FHD экран</li>
+                        </ul>
+                        <li href="#" class="btn">Сатып алуу</li>
+                    </div>
+                </div>
+
+                <!-- Продукт 4 -->
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/w273.webp" alt="ASUS ROG">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-title">ASUS ROG Strix</h3>
+                        <div class="product-price">95,000 сом</div>
+                        <ul class="product-features">
+                            <li>Intel Core i7</li>
+                            <li>16GB RAM</li>
+                            <li>1TB SSD</li>
+                            <li>NVIDIA RTX 3060</li>
+                        </ul>
+                        <li href="#" class="btn">Сатып алуу</li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>ButLaptop</h3>
+                    <p>Биз сизге жогорку сапаттагы ноутбуктарды сунуштайбыз. Арзыган баада, ишенимдүү кызмат!</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Каталог</h3>
+                    <ul>
+                        <li><a href="#">Gaming ноутбуктар</a></li>
+                        <li><a href="#">Ишкердик ноутбуктар</a></li>
+                        <li><a href="#">Студенттер үчүн</a></li>
+                        <li><a href="#">Аксессуарлар</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Компания</h3>
+                    <ul>
+                        <li><a href="#">Биз жөнүндө</a></li>
+                        <li><a href="#">Жеткирүү шарттары</a></li>
+                        <li><a href="#">Кепилдик</a></li>
+                        <li><a href="#">Карьера</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Байланыш</h3>
+                    <ul>
+                        <li>Бишккек, Кыргызстан</li>
+                        <li>Тел: +996 502 526 100</li>
+                        <li>Email: mamatjanovakjol</li>
+                        <li>Иш сааттары: 9:00 - 20:00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2025 ButLaptop. Бардык укуктар корголгон.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
