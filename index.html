@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Block Survival</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="ui">
+    <div class="panel">
+      <div class="label">HP</div>
+      <div class="bar"><div id="hpFill" class="fill hp"></div></div>
+      <div id="hpText" class="value">100 / 100</div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Перезарядка удара</div>
+      <div class="bar"><div id="cooldownFill" class="fill cooldown"></div></div>
+      <div id="cooldownText" class="value">Готово</div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Активный инструмент</div>
+      <div id="toolButtons" class="tool-grid"></div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Инвентарь</div>
+      <div id="inventory" class="inventory"></div>
+    </div>
+
+    <div class="panel">
+      <div class="label">Крафт</div>
+      <div id="craftButtons" class="craft-grid"></div>
+    </div>
+
+    <div class="controls">
+      WASD — движение · ЛКМ — добыча · F — атака · ПКМ (или Shift) — блок щитом
+    </div>
+  </div>
+
+  <canvas id="gameCanvas" width="1100" height="650"></canvas>
+
+  <script src="script.js"></script>
+</body>
+</html>
